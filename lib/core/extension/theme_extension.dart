@@ -21,7 +21,7 @@ extension AppThemeExtension on AppTheme{
         ),
       ),
       appBarTheme: AppBarTheme(
-          elevation: 0, backgroundColor: colorAppbar),
+          elevation: 0, backgroundColor: colorAppbar, foregroundColor: colorTextPrimary),
     );
   }
 }
