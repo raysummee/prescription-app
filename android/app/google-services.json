@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "962874477061",
+    "project_id": "prescription-ae6a3",
+    "storage_bucket": "prescription-ae6a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962874477061:android:c34a5d93d984fbd1552a6c",
+        "android_client_info": {
+          "package_name": "com.raysummee.prescription.app.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962874477061-so8i1asdfqckhagttmluhq63pbfmmst4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4t71M1P8hUeAoLbLIMIPIl_Xf404MCDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962874477061-so8i1asdfqckhagttmluhq63pbfmmst4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
