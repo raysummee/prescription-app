@@ -31,10 +31,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: appTheme.toThemeData(),
-      onGenerateRoute: AppRoutes.onGenerateRoute
+      routerConfig: AppRoutes.router,
     );
   }
 }

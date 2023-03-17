@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -100,7 +101,9 @@ class LoginPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 22.w),
             child: ElevatedButton(
-              onPressed: (){}, 
+              onPressed: (){
+                context.go("/home");
+              }, 
               style: ElevatedButton.styleFrom(
                 backgroundColor: appTheme.colorPrimary,
                 elevation: 0.0,
@@ -109,7 +112,7 @@ class LoginPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 "Next"
               )
             ),
