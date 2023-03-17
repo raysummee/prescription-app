@@ -16,7 +16,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform
   );
   Bloc.observer = CustomBlocObserver();
-  await FirebaseAuth.instance.signOut();
   runApp(const EntryPoint());
 }
 

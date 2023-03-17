@@ -6,10 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+
 import '../bloc/login/login_cubit.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  
+  final TextEditingController _confirmController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
@@ -64,7 +65,7 @@ class _LoginViewState extends State<LoginView> {
               children: [
                 Image.asset(
                   "assets/images/banner.webp",
-                  height: 0.4.sh,
+                  height: 0.35.sh,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(
@@ -147,15 +148,44 @@ class _LoginViewState extends State<LoginView> {
                   )
                 ),
                 SizedBox(
+                  height: 8.h,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 22.w),
+                  decoration: BoxDecoration(
+                    color: appTheme.colorSecondary,
+                    borderRadius: BorderRadius.circular(9.w)
+                  ),
+                  alignment: Alignment.center,
+                  height: 60.w,
+                  child: TextField(
+                    obscureText: true,
+                    controller: _confirmController,
+                    decoration: InputDecoration(
+                      hintText: "Confirm Password",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: appTheme.colorTextSecondary
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 17.w
+                      )
+                    ),
+                  )
+                ),
+                SizedBox(
                   height: 23.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: ElevatedButton(
                     onPressed: (){
-                      context.read<LoginCubit>().login(
+                      context.read<LoginCubit>().signup(
                         email: _emailController.text, 
-                        password: _passwordController.text
+                        password: _passwordController.text,
+                        confirm: _confirmController.text
                       );
                     }, 
                     style: ElevatedButton.styleFrom(
@@ -167,17 +197,17 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     child: const Text(
-                      "Login"
+                      "Sign up"
                     )
                   ),
                 ),
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      context.pushReplacement("/register");
+                      context.pushReplacement("/login");
                     }, 
                     child: Text(
-                      "Create an account",
+                      "Login instead",
                       style: TextStyle(
                         color: appTheme.colorPrimary
                       ),
