@@ -6,7 +6,8 @@ abstract class AppTheme {
   late Color colorTextPrimary;
   late Color colorTextSecondary;
   late Color colorTextError;
-  late Color colorAccentSecondary;
+  late Color colorShadow;
+  late Color colorAccentPrimary;
   late Color colorTertiary;
   late Color colorAppbar;
   late Color colorProgressBackground;

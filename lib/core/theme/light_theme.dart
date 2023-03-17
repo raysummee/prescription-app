@@ -19,7 +19,10 @@ class AppThemeLight implements AppTheme {
   Color colorTextError = const Color(0xFFCD594D);
 
   @override
-  Color colorAccentSecondary = const Color(0xFF39393D);
+  Color colorShadow = const Color.fromRGBO(224, 225, 255, 0.3);
+  
+  @override
+  Color colorAccentPrimary = const Color.fromRGBO(246, 247, 251, 1);
 
   @override
   Color colorTertiary = const Color.fromRGBO(207, 207, 207, 1);
