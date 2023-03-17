@@ -30,6 +30,7 @@ class HomeAppbar extends StatelessWidget with PreferredSizeWidget {
             )
           ),
           middle: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 "Current location",
