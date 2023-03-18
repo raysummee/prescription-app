@@ -1,5 +1,6 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/features/login/data/repository/authentication_repository.dart';
+import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/shared/components/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,24 +39,33 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
     return Scaffold(
-      body: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
-          if(state is LoginLoading){
-            LoadingDialog.show(context);
-          }else{
-            LoadingDialog.close();
-          }
-
-          if(state is LoginSuccess){
-            context.go("/");
-          }
-
-          if(state is LoginError){
-            Fluttertoast.showToast(
-              msg: state.message
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if(state is LoginLoading){
+                LoadingDialog.show(context);
+              }
+              if(state is LoginSuccess){
+                LoadingDialog.close();
+                context.read<AuthenticationBloc>().add(AuthenticationStarted());
+              }
+              if(state is LoginError){
+                LoadingDialog.close();
+                Fluttertoast.showToast(
+                  msg: state.message
+                );
+              }
+            },
+          ),
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if(state is AuthenticationSuccess){
+                context.go("/");
+              }
+            },
+          ),
+        ],
         child: SafeArea(
           top: false,
           child: SingleChildScrollView(

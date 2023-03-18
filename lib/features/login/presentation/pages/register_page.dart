@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
+import '../bloc/authentication/authentication_bloc.dart';
 import '../bloc/login/login_cubit.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -39,24 +40,33 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
     return Scaffold(
-      body: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
-          if(state is LoginLoading){
-            LoadingDialog.show(context);
-          }else{
-            LoadingDialog.close();
-          }
-
-          if(state is LoginSuccess){
-            context.go("/");
-          }
-
-          if(state is LoginError){
-            Fluttertoast.showToast(
-              msg: state.message
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if(state is LoginLoading){
+                LoadingDialog.show(context);
+              }
+              if(state is LoginSuccess){
+                LoadingDialog.close();
+                context.read<AuthenticationBloc>().add(AuthenticationStarted());
+              }
+              if(state is LoginError){
+                LoadingDialog.close();
+                Fluttertoast.showToast(
+                  msg: state.message
+                );
+              }
+            },
+          ),
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if(state is AuthenticationSuccess){
+                context.go("/");
+              }
+            },
+          ),
+        ],
         child: SafeArea(
           top: false,
           child: SingleChildScrollView(
