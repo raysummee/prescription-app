@@ -3,6 +3,8 @@ import 'package:app/core/icon/app_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../home/presentation/components/home_appbar.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.child});
   final Widget child;
@@ -16,6 +18,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
     return Scaffold(
+      appBar: const HomeAppbar(),
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _calculateSelectedIndex(context),
