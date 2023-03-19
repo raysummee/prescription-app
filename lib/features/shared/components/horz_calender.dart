@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/core/config/app_config.dart';
 
 class HorzCalender extends StatelessWidget {
-  const HorzCalender({super.key});
+  const HorzCalender({super.key, this.large=false});
+  final bool large;
 
   final List<String> _weekdays = const ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
@@ -12,10 +13,34 @@ class HorzCalender extends StatelessWidget {
   Widget build(BuildContext context) {
     final start = DateTime.now().subtract(const Duration(days: 3));
     final dates = List.generate(7, (index) => start.add(Duration(days: index)));
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: dates.mapIndexed((i,e)=> _buildItem(e, i)).toList(),
+    return Column(
+      children: [
+        if(large) Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: (){}, 
+              icon: const Icon(Icons.chevron_left)
+            ),
+            Text(
+              "March 2023",
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w700
+              ),
+            ),
+            IconButton(
+              onPressed: (){}, 
+              icon: const Icon(Icons.chevron_right)
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: dates.mapIndexed((i,e)=> _buildItem(e, i)).toList(),
+        ),
+      ],
     );
   }
 
