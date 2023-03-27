@@ -1,7 +1,7 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/features/home/presentation/components/dose_list.dart';
 import 'package:app/features/home/presentation/components/home_appbar.dart';
-import 'package:app/features/home/presentation/components/horz_calender.dart';
+import 'package:app/features/shared/components/horz_calender.dart';
 import 'package:app/features/home/presentation/components/medicine_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

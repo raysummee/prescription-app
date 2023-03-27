@@ -19,7 +19,9 @@ class HorzCalender extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
+              padding: EdgeInsets.all(8.w),
               onPressed: (){}, 
+              iconSize: 30.sp,
               icon: const Icon(Icons.chevron_left)
             ),
             Text(
@@ -30,15 +32,20 @@ class HorzCalender extends StatelessWidget {
               ),
             ),
             IconButton(
+              padding: EdgeInsets.all(8.w),
               onPressed: (){}, 
+              iconSize: 30.sp,
               icon: const Icon(Icons.chevron_right)
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: dates.mapIndexed((i,e)=> _buildItem(e, i)).toList(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: dates.mapIndexed((i,e)=> _buildItem(e, i)).toList(),
+          ),
         ),
       ],
     );
