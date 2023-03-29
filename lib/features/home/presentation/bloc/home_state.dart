@@ -1,0 +1,20 @@
+part of 'home_cubit.dart';
+
+abstract class HomeState extends Equatable {
+  const HomeState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class HomeInitial extends HomeState {}
+class HomeLoading extends HomeState {}
+class HomeFailed extends HomeState {}
+class HomeSuccess extends HomeState {
+  final List<MedicineModel> medicines;
+  const HomeSuccess({
+    required this.medicines,
+  });
+  @override
+  List<Object> get props => [medicines];
+}

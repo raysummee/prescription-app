@@ -1,19 +1,39 @@
 import 'package:app/core/config/app_config.dart';
+import 'package:app/features/medicine/data/models/medicine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class DoseList extends StatelessWidget {
-  const DoseList({super.key});
-
+  const DoseList({super.key, required this.medicines});
+  final List<MedicineModel> medicines;
+  final List<Map<String, String>>  medicineTypes = const [
+    {
+      "img": "assets/icons/capsule.png",
+      "title": "Capsule"
+    },
+    {
+      "img": "assets/icons/capsule 2.png",
+      "title": "Pills"
+    },
+    {
+      "img": "assets/icons/capsule 3.png",
+      "title": "Eyedrops"
+    },
+    {
+      "img": "assets/icons/capsule 4.png",
+      "title": "Liquid"
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
     return SizedBox(
       height: 0.5.sw,
       child: ListView.separated(
-        itemCount: 5,
+        itemCount: medicines.length,
         padding: EdgeInsets.symmetric(horizontal: 22.w),
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => SizedBox(width: 8.w),
@@ -43,7 +63,7 @@ class DoseList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         children: [
                           Text(
-                            "2",
+                            "${medicines[index].dose.toInt()}",
                             style: TextStyle(
                               fontSize: 24.sp,
                               fontWeight: FontWeight.w700,
@@ -55,7 +75,7 @@ class DoseList extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              "Tabs",
+                              medicines[index].doseType,
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
@@ -67,7 +87,10 @@ class DoseList extends StatelessWidget {
                       ),
                       const Expanded(child: SizedBox()),
                       Text(
-                        "Omega-3",
+                        medicines[index].medicineName,
+                        maxLines: 1,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -78,7 +101,7 @@ class DoseList extends StatelessWidget {
                         height: 2.h,
                       ),
                       Text(
-                        "100mg",
+                        medicines[index].stomach,
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -89,7 +112,7 @@ class DoseList extends StatelessWidget {
                         height: 5.h,
                       ),
                       Text(
-                        "08:00 am",
+                        DateFormat("hh:mm a").format(medicines[index].time),
                         style: TextStyle(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w600,
@@ -104,7 +127,7 @@ class DoseList extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 28.w),
                     child: Image.asset(
-                      "assets/icons/capsule.png",
+                      medicineTypes[medicines[index].medicineCategoryIndex]["img"]!,
                       width: 0.08.sw,
                     ),
                   )
