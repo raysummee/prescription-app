@@ -81,8 +81,12 @@ class CommentsChange extends AddMedicineEvent {
 
 class AddMedicine extends AddMedicineEvent {
   final GlobalKey<FormState> formKey;
-  const AddMedicine(this.formKey);
+  final String uid;
+  const AddMedicine({
+    required this.formKey,
+    required this.uid,
+  });
   @override
-  List<Object> get props => [formKey];
+  List<Object> get props => [formKey, uid];
 }
 

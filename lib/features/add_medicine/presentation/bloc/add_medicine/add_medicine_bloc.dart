@@ -1,3 +1,5 @@
+import 'package:app/features/add_medicine/data/models/add_medicine_model.dart';
+import 'package:app/features/add_medicine/domain/repository/add_medicine_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,8 @@ part 'add_medicine_event.dart';
 part 'add_medicine_state.dart';
 
 class AddMedicineBloc extends Bloc<AddMedicineEvent, AddMedicineState> {
-  AddMedicineBloc() : super(const AddMedicineUpdated()) {
+  final AddMedicineRepository repository;
+  AddMedicineBloc(this.repository) : super(const AddMedicineUpdated()) {
     on<CategoryChange>((event, emit) {
       if(state is! AddMedicineUpdated){
         return;
@@ -79,7 +82,7 @@ class AddMedicineBloc extends Bloc<AddMedicineEvent, AddMedicineState> {
       ));
     });
 
-    on<AddMedicine>((event, emit){
+    on<AddMedicine>((event, emit) async {
       if(state is! AddMedicineUpdated){
         return;
       }
@@ -99,6 +102,17 @@ class AddMedicineBloc extends Bloc<AddMedicineEvent, AddMedicineState> {
         emit(stateUpdated);
         return;
       }
+      AddMedicineModel addMedicineModel = AddMedicineModel(
+        medicineCategoryIndex: stateUpdated.medicineCategoryIndex!, 
+        medicineCategoryName: stateUpdated.medicineCategoryName!, 
+        medicineName: stateUpdated.medicineName!, 
+        dose: stateUpdated.dose!, 
+        doseType: stateUpdated.doseType!, 
+        stomach: stateUpdated.stomach!, 
+        time: stateUpdated.time!,
+        comments: stateUpdated.comments
+      );
+      await repository.addMedicine(addMedicineModel, event.uid);
       emit(AddMedicineSuccess());
     });
 
