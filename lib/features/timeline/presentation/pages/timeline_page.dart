@@ -1,5 +1,6 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/core/theme/app_theme.dart';
+import 'package:app/features/add_medicine/presentation/components/add_medicine_bottom_sheet.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +34,9 @@ class TimelinePage extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: (){}, 
+                    onPressed: (){
+                      AddMedicineBottomSheet.show(context);
+                    }, 
                     style: TextButton.styleFrom(
                       foregroundColor: appTheme.colorPrimary,
                       textStyle: TextStyle(
