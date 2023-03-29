@@ -2,6 +2,7 @@ import 'package:app/core/config/app_config.dart';
 import 'package:app/core/theme/app_theme.dart';
 import 'package:app/features/home/presentation/bloc/home_cubit.dart';
 import 'package:app/features/home/presentation/components/dose_list.dart';
+import 'package:app/features/home/presentation/components/dose_list_shimmer.dart';
 import 'package:app/features/home/presentation/components/home_appbar.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/medicine/data/repository/medicine_repository.dart';
@@ -67,12 +68,7 @@ class HomeView extends StatelessWidget {
             BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 if(state is! HomeSuccess){
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+                  return const DoseListShimmer();
                 }
                 if(state.medicines.isEmpty){
                   return Padding(
