@@ -1,8 +1,9 @@
-import 'package:app/features/shared/data/models/medicine_model.dart';
-import 'package:app/features/shared/domain/repository/medicine_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../medicine/data/models/medicine_model.dart';
+import '../../../../medicine/domain/repository/medicine_repository.dart';
 
 part 'add_medicine_event.dart';
 part 'add_medicine_state.dart';

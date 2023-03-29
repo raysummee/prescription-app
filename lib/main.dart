@@ -1,7 +1,7 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/core/theme/light_theme.dart';
 import 'package:app/features/login/data/repository/authentication_repository.dart';
-import 'package:app/features/shared/data/repository/medicine_repository.dart';
+import 'package:app/features/medicine/data/repository/medicine_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

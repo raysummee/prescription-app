@@ -4,7 +4,7 @@ import 'package:app/features/add_medicine/presentation/bloc/add_medicine/add_med
 import 'package:app/features/add_medicine/presentation/components/text_field_add_medicine.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/shared/components/loading_dialog.dart';
-import 'package:app/features/shared/data/repository/medicine_repository.dart';
+import 'package:app/features/medicine/data/repository/medicine_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

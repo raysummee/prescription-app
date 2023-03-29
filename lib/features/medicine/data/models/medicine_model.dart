@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class MedicineModel extends Equatable {
@@ -59,5 +60,9 @@ class MedicineModel extends Equatable {
       time: DateTime.fromMillisecondsSinceEpoch(json['time']),
       comments: json['comments'],
     );
+  }
+
+  factory MedicineModel.fromQueryDocumentSnapshot(QueryDocumentSnapshot snapshot){
+    return MedicineModel.fromJson(snapshot.data() as Map<String, dynamic>);
   }
 }
