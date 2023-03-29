@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 abstract class BaseValidator{
   static FormFieldValidator<String> _validateRegex(String regex, String errorMsg, bool not) {
     return (value) {
-      if (RegExp(regex).hasMatch(value!)) {
+      if (RegExp(regex).hasMatch(value??"")) {
         return not? errorMsg:null;
       }
       return not? null:errorMsg;

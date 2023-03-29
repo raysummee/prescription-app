@@ -1,4 +1,5 @@
 import 'package:app/core/config/app_config.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -10,21 +11,26 @@ class TextFieldAddMedicine extends StatelessWidget {
     required this.label,
     this.isLarge=false,
     this.dropList=const [],
-    this.formatDropList
+    this.formatDropList,
+    this.onChange,
+    this.validator
   });
   final String label;
   final bool isLarge;
   final List dropList;
   final String Function(dynamic val)? formatDropList;
-
+  final Function(dynamic value)? onChange;
+ final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
-    String Function(dynamic val) formatDropGenList;
-    if(formatDropList==null){
-      formatDropGenList= (val)=>val;
+    List<String> formatDropGenList = [];
+    if(formatDropList!=null){
+      formatDropGenList= dropList.map((e) => formatDropList!(e)).toList();
     }else{
-      formatDropGenList = formatDropList!;
+      if(dropList.isNotEmpty){
+        formatDropGenList = dropList as List<String>;
+      }
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -36,6 +42,8 @@ class TextFieldAddMedicine extends StatelessWidget {
         ),
         dropList.isEmpty? TextFormField(
           maxLines: isLarge? 3: null,
+          onChanged: onChange,
+          validator: validator,
           decoration: InputDecoration(
             hintText: "Enter $label",
             filled: true,
@@ -49,12 +57,13 @@ class TextFieldAddMedicine extends StatelessWidget {
         ):
         Flexible(
           child: DropdownButtonFormField(
-            items: dropList.map((e) {
+            items: formatDropGenList.map((e) {
               return DropdownMenuItem(
                 value: e,
-                child: Text(formatDropGenList(e)),
+                child: Text(e),
               );
             }).toList(), 
+            validator: validator,
             hint: Text(label),
             borderRadius: BorderRadius.circular(15),
             elevation: 1,
@@ -67,7 +76,13 @@ class TextFieldAddMedicine extends StatelessWidget {
                 borderRadius: BorderRadius.circular(35)
               ),
             ),
-            onChanged: (value) {},
+            onChanged: (value) {
+              if(value==null||onChange==null){
+                return;
+              }
+              int index = formatDropGenList.indexOf(value);
+              onChange!(dropList[index]);
+            },
           ),
         )
       ],

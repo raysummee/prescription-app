@@ -38,6 +38,13 @@ class Validator{
     ]);
   }
 
+  static FormFieldValidator<String> get validateDose {
+    return BaseValidator.validate([
+      BaseValidator.validateRegex(r".+", "Dose should not be empty"),
+      BaseValidator.validateRegex(r"^\d*\.?\d*$", "Dose is not valid")
+    ]);
+  }
+
   static FormFieldValidator<String> get validatePassword {
     return BaseValidator.validateRegex(r".+", "Password should not be empty");
   }
