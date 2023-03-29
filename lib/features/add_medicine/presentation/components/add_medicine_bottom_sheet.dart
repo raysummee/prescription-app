@@ -104,7 +104,6 @@ class AddMedicineBottomSheetView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
                   SizedBox(
@@ -206,7 +205,8 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                           validator: Validator.validateNonull("Type"),
                           dropList: const <String>[
                             "Tabs",
-                            "Spoon"
+                            "Spoons",
+                            "Drops",
                           ],
                           onChange: (value) {
                             context.read<AddMedicineBloc>().add(
