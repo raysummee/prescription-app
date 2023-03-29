@@ -1,4 +1,4 @@
-import 'package:app/features/shared/models/medicine_model.dart';
+import 'package:app/features/shared/data/models/medicine_model.dart';
 import 'package:app/features/add_medicine/domain/repository/add_medicine_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
