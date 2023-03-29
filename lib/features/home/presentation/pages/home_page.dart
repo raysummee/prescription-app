@@ -59,7 +59,7 @@ class HomeView extends StatelessWidget {
               height: 20.h,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 22.w),
+              padding: EdgeInsets.symmetric(horizontal: 14.w),
               child: const HorzCalender(),
             ),
             SizedBox(
