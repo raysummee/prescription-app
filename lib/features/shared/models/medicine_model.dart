@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class AddMedicineModel extends Equatable {
+class MedicineModel extends Equatable {
   final int medicineCategoryIndex;
   final String medicineCategoryName;
   final String medicineName;
@@ -11,7 +11,7 @@ class AddMedicineModel extends Equatable {
   final String stomach;
   final DateTime time;
   final String? comments;
-  const AddMedicineModel({
+  const MedicineModel({
     required this.medicineCategoryIndex,
     required this.medicineCategoryName,
     required this.medicineName,
@@ -48,8 +48,8 @@ class AddMedicineModel extends Equatable {
    'comments': comments
   };
 
-  factory AddMedicineModel.fromJson(Map<String, dynamic> json) {
-    return AddMedicineModel(
+  factory MedicineModel.fromJson(Map<String, dynamic> json) {
+    return MedicineModel(
       medicineCategoryIndex: json['medicineCategoryIndex']!.toInt(),
       medicineCategoryName: json['medicineCategoryName'],
       medicineName: json['medicineName'],
