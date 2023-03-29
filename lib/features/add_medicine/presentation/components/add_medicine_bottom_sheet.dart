@@ -1,10 +1,10 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/core/validator/validator.dart';
-import 'package:app/features/add_medicine/data/repository/add_medicine_repository.dart';
 import 'package:app/features/add_medicine/presentation/bloc/add_medicine/add_medicine_bloc.dart';
 import 'package:app/features/add_medicine/presentation/components/text_field_add_medicine.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/shared/components/loading_dialog.dart';
+import 'package:app/features/shared/data/repository/medicine_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,14 +36,11 @@ class AddMedicineBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => AddMedicineRepositoryImpl(),
-        child: BlocProvider(
-          create: (context) => AddMedicineBloc(
-            context.read<AddMedicineRepositoryImpl>()
-          ),
-          child: const AddMedicineBottomSheetView(),
-        ),
+    return BlocProvider(
+      create: (context) => AddMedicineBloc(
+        context.read<MedicineRepositoryImpl>()
+      ),
+      child: const AddMedicineBottomSheetView(),
     );
   }
 }

@@ -1,7 +1,7 @@
-import 'package:app/features/add_medicine/domain/repository/add_medicine_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../shared/data/models/medicine_model.dart';
-class AddMedicineRepositoryImpl extends AddMedicineRepository{
+import '../../domain/repository/medicine_repository.dart';
+class MedicineRepositoryImpl extends MedicineRepository{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Future<void> addMedicine(MedicineModel addMedicineModel, String uid) async {

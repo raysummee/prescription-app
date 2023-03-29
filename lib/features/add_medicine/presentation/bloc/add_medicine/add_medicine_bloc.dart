@@ -1,5 +1,5 @@
 import 'package:app/features/shared/data/models/medicine_model.dart';
-import 'package:app/features/add_medicine/domain/repository/add_medicine_repository.dart';
+import 'package:app/features/shared/domain/repository/medicine_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ part 'add_medicine_event.dart';
 part 'add_medicine_state.dart';
 
 class AddMedicineBloc extends Bloc<AddMedicineEvent, AddMedicineState> {
-  final AddMedicineRepository repository;
+  final MedicineRepository repository;
   AddMedicineBloc(this.repository) : super(const AddMedicineUpdated()) {
     on<CategoryChange>((event, emit) {
       if(state is! AddMedicineUpdated){
