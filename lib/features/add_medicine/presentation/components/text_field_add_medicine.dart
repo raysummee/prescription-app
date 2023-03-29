@@ -9,30 +9,34 @@ class TextFieldAddMedicine extends StatelessWidget {
     super.key, 
     required this.label,
     this.isLarge=false,
-    this.dropList=const []
+    this.dropList=const [],
+    this.formatDropList
   });
   final String label;
   final bool isLarge;
   final List dropList;
+  final String Function(dynamic val)? formatDropList;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = AppConfig.of(context).appTheme;
+    String Function(dynamic val) formatDropGenList;
+    if(formatDropList==null){
+      formatDropGenList= (val)=>val;
+    }else{
+      formatDropGenList = formatDropList!;
+    }
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label),
         SizedBox(
           height: 10.h,
         ),
-        TextFormField(
+        dropList.isEmpty? TextFormField(
           maxLines: isLarge? 3: null,
           decoration: InputDecoration(
-            suffixIcon: dropList.isNotEmpty? Icon(
-              Icons.arrow_drop_down,
-              size: 32.sp,
-            ):null,
-            suffixIconConstraints: BoxConstraints.tight(Size(60, 50)),
             hintText: "Enter $label",
             filled: true,
             fillColor: appTheme.colorTertiary,
@@ -41,7 +45,29 @@ class TextFieldAddMedicine extends StatelessWidget {
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(35)
             ),
-            
+          ),
+        ):
+        Flexible(
+          child: DropdownButtonFormField(
+            items: dropList.map((e) {
+              return DropdownMenuItem(
+                value: e,
+                child: Text(formatDropGenList(e)),
+              );
+            }).toList(), 
+            hint: Text(label),
+            borderRadius: BorderRadius.circular(15),
+            elevation: 1,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: appTheme.colorTertiary,
+              contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(35)
+              ),
+            ),
+            onChanged: (value) {},
           ),
         )
       ],

@@ -2,6 +2,7 @@ import 'package:app/core/config/app_config.dart';
 import 'package:app/features/add_medicine/presentation/components/text_field_add_medicine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class AddMedicineBottomSheet extends StatelessWidget {
   const AddMedicineBottomSheet({super.key});
@@ -97,41 +98,69 @@ class AddMedicineBottomSheet extends StatelessWidget {
             SizedBox(
               height: 28.h,
             ),
-            TextFieldAddMedicine(label: "Medicine name"),
+            const TextFieldAddMedicine(label: "Medicine name"),
             SizedBox(
               height: 18.h,
             ),
             Row(
               children: [
-                Expanded(child: TextFieldAddMedicine(label: "Dose")),
+                const Expanded(child: TextFieldAddMedicine(label: "Dose")),
                 SizedBox(
                   width: 18.w,
                 ),
-                Expanded(child: TextFieldAddMedicine(label: "Type")),
+                const Expanded(
+                  child: TextFieldAddMedicine(
+                    label: "Type",
+                    dropList: [
+                      "Tabs",
+                      "Spoon"
+                    ],
+                  )
+                ),
               ],
             ),
             SizedBox(
               height: 18.h,
             ),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(child: TextFieldAddMedicine(
-                  label: "Stomach",
-                  dropList: [
-                    "After eat",
-                    "Before eat"
-                  ],
-                )),
+                const Flexible(
+                  child: TextFieldAddMedicine(
+                    label: "Stomach",
+                    dropList: [
+                      "After eat",
+                      "Before eat"
+                    ],
+                  )
+                ),
                 SizedBox(
                   width: 18.w,
                 ),
-                Expanded(child: TextFieldAddMedicine(label: "Time")),
+                Flexible(
+                  child: TextFieldAddMedicine(
+                    label: "Time",
+                    dropList: List.generate(37, (index) {
+                      final now = DateTime.now().copyWith(
+                        hour: 6, 
+                        minute: 0, 
+                        second: 0, 
+                        millisecond: 0, 
+                        microsecond: 0
+                      );
+                      return now.add(Duration(minutes: 30*index));
+                    }),
+                    formatDropList: (val) {
+                      return DateFormat("hh:mm a").format(val);
+                    },
+                  )
+                ),
               ],
             ),
             SizedBox(
               height: 18.h,
             ),
-            TextFieldAddMedicine(label: "Comments", isLarge: true,),
+            const TextFieldAddMedicine(label: "Comments", isLarge: true,),
             SizedBox(
               height: 18.h,
             ),
