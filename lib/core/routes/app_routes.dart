@@ -3,6 +3,7 @@ import 'package:app/features/login/presentation/bloc/authentication/authenticati
 import 'package:app/features/login/presentation/pages/login_page.dart';
 import 'package:app/features/login/presentation/pages/register_page.dart';
 import 'package:app/features/main/presentation/pages/main_page.dart';
+import 'package:app/features/settings/presentation/pages/settings_page.dart';
 import 'package:app/features/timeline/presentation/pages/timeline_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,8 +80,8 @@ class AppRoutes {
             ),
             GoRoute(
               path: "/settings",
-              pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Center(child: Text("settings"))),
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: SettingsPage()),
             ),
           ]),
       GoRoute(
