@@ -28,21 +28,17 @@ class TimelinePage extends StatelessWidget {
                 children: [
                   Text(
                     "Your Dosage",
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600
-                    ),
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
                   ),
                   TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       AddMedicineBottomSheet.show(context);
-                    }, 
+                    },
                     style: TextButton.styleFrom(
                       foregroundColor: appTheme.colorPrimary,
                       textStyle: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w700
-                    ),
+                          fontSize: 15.sp, fontWeight: FontWeight.w700),
                     ),
                     child: const Text("Add +"),
                   )

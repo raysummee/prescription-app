@@ -5,21 +5,18 @@ class LoadingDialog extends StatelessWidget {
 
   static BuildContext? preContext;
 
-
-  static show(context){
+  static show(context) {
     preContext ??= context;
     showDialog(
       barrierDismissible: false,
-      context: context, 
+      context: context,
       builder: (context) => WillPopScope(
-        onWillPop: () async => false, 
-        child: const LoadingDialog()
-      ),
+          onWillPop: () async => false, child: const LoadingDialog()),
     );
   }
 
-  static close(){
-    if(preContext!=null){
+  static close() {
+    if (preContext != null) {
       Navigator.of(preContext!).pop();
       preContext = null;
     }
@@ -28,14 +25,10 @@ class LoadingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UnconstrainedBox(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15)
-        ),
-        padding: const EdgeInsets.all(16),
-        child: const CircularProgressIndicator()
-      )
-    );
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(15)),
+            padding: const EdgeInsets.all(16),
+            child: const CircularProgressIndicator()));
   }
 }

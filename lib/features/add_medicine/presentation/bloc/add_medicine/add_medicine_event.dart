@@ -89,4 +89,3 @@ class AddMedicine extends AddMedicineEvent {
   @override
   List<Object> get props => [formKey, uid];
 }
-

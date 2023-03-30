@@ -10,11 +10,11 @@ class HomeCubit extends Cubit<HomeState> {
   final MedicineRepository _repository;
 
   getUserMedicine(String uid) async {
-    try{
+    try {
       emit(HomeLoading());
       final medicines = await _repository.getUseMedicines(uid);
       emit(HomeSuccess(medicines: medicines));
-    }catch(err){
+    } catch (err) {
       emit(HomeFailed());
     }
   }

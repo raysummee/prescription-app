@@ -14,13 +14,13 @@ class AppThemeLight implements AppTheme {
 
   @override
   Color colorTextSecondary = const Color(0xFF9D9DA8);
-  
+
   @override
   Color colorTextError = const Color(0xFFCD594D);
 
   @override
   Color colorShadow = const Color.fromRGBO(224, 225, 255, 0.3);
-  
+
   @override
   Color colorAccentPrimary = const Color.fromRGBO(246, 247, 251, 1);
 
@@ -28,7 +28,7 @@ class AppThemeLight implements AppTheme {
   Color colorTertiary = const Color.fromRGBO(241, 243, 250, 1);
 
   @override
-  Color colorAppbar =  const Color.fromRGBO(250, 250, 250, 1);
+  Color colorAppbar = const Color.fromRGBO(250, 250, 250, 1);
 
   @override
   ButtonStyle buttonStyle(Color color, {bool withBorder = false}) =>

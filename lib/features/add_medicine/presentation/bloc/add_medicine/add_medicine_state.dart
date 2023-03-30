@@ -2,7 +2,7 @@ part of 'add_medicine_bloc.dart';
 
 abstract class AddMedicineState extends Equatable {
   const AddMedicineState();
-  
+
   @override
   List<Object?> get props => [];
 }
@@ -18,7 +18,6 @@ class AddMedicineError extends AddMedicineState {
   });
 }
 
-
 class AddMedicineUpdated extends AddMedicineState {
   final int? medicineCategoryIndex;
   final String? medicineCategoryName;
@@ -28,7 +27,7 @@ class AddMedicineUpdated extends AddMedicineState {
   final String? stomach;
   final DateTime? time;
   final String? comments;
-  
+
   const AddMedicineUpdated({
     this.medicineCategoryIndex,
     this.medicineCategoryName,
@@ -40,18 +39,17 @@ class AddMedicineUpdated extends AddMedicineState {
     this.comments,
   });
 
-
   @override
   List<Object?> get props => [
-    medicineCategoryIndex,
-    medicineCategoryName,
-    medicineName,
-    dose,
-    doseType,
-    stomach,
-    time,
-    comments
-  ];
+        medicineCategoryIndex,
+        medicineCategoryName,
+        medicineName,
+        dose,
+        doseType,
+        stomach,
+        time,
+        comments
+      ];
 
   AddMedicineUpdated copyWith({
     int? medicineCategoryIndex,
@@ -64,7 +62,8 @@ class AddMedicineUpdated extends AddMedicineState {
     String? comments,
   }) {
     return AddMedicineUpdated(
-      medicineCategoryIndex: medicineCategoryIndex ?? this.medicineCategoryIndex,
+      medicineCategoryIndex:
+          medicineCategoryIndex ?? this.medicineCategoryIndex,
       medicineCategoryName: medicineCategoryName ?? this.medicineCategoryName,
       medicineName: medicineName ?? this.medicineName,
       dose: dose ?? this.dose,
@@ -80,4 +79,3 @@ class AddMedicineUpdated extends AddMedicineState {
     return 'AddMedicineUpdated(medicineCategoryIndex: $medicineCategoryIndex, medicineCategoryName: $medicineCategoryName, medicineName: $medicineName, dose: $dose, doseType: $doseType, stomach: $stomach, time: $time, comments: $comments)';
   }
 }
-

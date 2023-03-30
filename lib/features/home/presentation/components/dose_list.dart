@@ -9,23 +9,11 @@ import 'package:intl/intl.dart';
 class DoseList extends StatelessWidget {
   const DoseList({super.key, required this.medicines});
   final List<MedicineModel> medicines;
-  final List<Map<String, String>>  medicineTypes = const [
-    {
-      "img": "assets/icons/capsule.png",
-      "title": "Capsule"
-    },
-    {
-      "img": "assets/icons/capsule 2.png",
-      "title": "Pills"
-    },
-    {
-      "img": "assets/icons/capsule 3.png",
-      "title": "Eyedrops"
-    },
-    {
-      "img": "assets/icons/capsule 4.png",
-      "title": "Liquid"
-    },
+  final List<Map<String, String>> medicineTypes = const [
+    {"img": "assets/icons/capsule.png", "title": "Capsule"},
+    {"img": "assets/icons/capsule 2.png", "title": "Pills"},
+    {"img": "assets/icons/capsule 3.png", "title": "Eyedrops"},
+    {"img": "assets/icons/capsule 4.png", "title": "Liquid"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -42,19 +30,14 @@ class DoseList extends StatelessWidget {
             width: 0.4.sw,
             height: 0.5.sw,
             decoration: BoxDecoration(
-              color: appTheme.colorAccentPrimary,
-              borderRadius: BorderRadius.circular(28.w),
-              border: Border.all(
-                color: appTheme.colorShadow
-              )
-            ),
+                color: appTheme.colorAccentPrimary,
+                borderRadius: BorderRadius.circular(28.w),
+                border: Border.all(color: appTheme.colorShadow)),
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 28.w
-                  ),                        
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 28.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -65,10 +48,9 @@ class DoseList extends StatelessWidget {
                           Text(
                             "${medicines[index].dose.toInt()}",
                             style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.w700,
-                              color: appTheme.colorPrimary
-                            ),
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w700,
+                                color: appTheme.colorPrimary),
                           ),
                           SizedBox(
                             width: 8.w,
@@ -77,10 +59,9 @@ class DoseList extends StatelessWidget {
                             child: Text(
                               medicines[index].doseType,
                               style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
-                                color: appTheme.colorTextPrimary
-                              ),
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: appTheme.colorTextPrimary),
                             ),
                           ),
                         ],
@@ -92,10 +73,9 @@ class DoseList extends StatelessWidget {
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: appTheme.colorTextPrimary
-                        ),
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: appTheme.colorTextPrimary),
                       ),
                       SizedBox(
                         height: 2.h,
@@ -103,10 +83,9 @@ class DoseList extends StatelessWidget {
                       Text(
                         medicines[index].stomach,
                         style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: appTheme.colorTextSecondary
-                        ),
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: appTheme.colorTextSecondary),
                       ),
                       SizedBox(
                         height: 5.h,
@@ -114,24 +93,24 @@ class DoseList extends StatelessWidget {
                       Text(
                         DateFormat("hh:mm a").format(medicines[index].time),
                         style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w600,
-                          color: appTheme.colorTextPrimary
-                        ),
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
+                            color: appTheme.colorTextPrimary),
                       ),
                     ],
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 28.w),
-                    child: Image.asset(
-                      medicineTypes[medicines[index].medicineCategoryIndex]["img"]!,
-                      width: 0.08.sw,
-                    ),
-                  )
-                )
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.w, vertical: 28.w),
+                      child: Image.asset(
+                        medicineTypes[medicines[index].medicineCategoryIndex]
+                            ["img"]!,
+                        width: 0.08.sw,
+                      ),
+                    ))
               ],
             ),
           );

@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '962874477061',
     projectId: 'prescription-ae6a3',
     storageBucket: 'prescription-ae6a3.appspot.com',
-    iosClientId: '962874477061-b4mtis4dhrbpm8nmsgrlddpvme6lr8i2.apps.googleusercontent.com',
+    iosClientId:
+        '962874477061-b4mtis4dhrbpm8nmsgrlddpvme6lr8i2.apps.googleusercontent.com',
     iosBundleId: 'com.raysummee.prescriptionApp',
   );
 }

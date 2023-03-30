@@ -23,7 +23,6 @@ class MedicineModel extends Equatable {
     this.comments,
   });
 
-
   @override
   List<Object?> get props {
     return [
@@ -39,15 +38,15 @@ class MedicineModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-   'medicineCategoryIndex': medicineCategoryIndex,
-   'medicineCategoryName': medicineCategoryName,
-   'medicineName': medicineName,
-   'dose': dose,
-   'doseType': doseType,
-   'stomach': stomach,
-   'time': time.millisecondsSinceEpoch,
-   'comments': comments
-  };
+        'medicineCategoryIndex': medicineCategoryIndex,
+        'medicineCategoryName': medicineCategoryName,
+        'medicineName': medicineName,
+        'dose': dose,
+        'doseType': doseType,
+        'stomach': stomach,
+        'time': time.millisecondsSinceEpoch,
+        'comments': comments
+      };
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) {
     return MedicineModel(
@@ -62,7 +61,8 @@ class MedicineModel extends Equatable {
     );
   }
 
-  factory MedicineModel.fromQueryDocumentSnapshot(QueryDocumentSnapshot snapshot){
+  factory MedicineModel.fromQueryDocumentSnapshot(
+      QueryDocumentSnapshot snapshot) {
     return MedicineModel.fromJson(snapshot.data() as Map<String, dynamic>);
   }
 }

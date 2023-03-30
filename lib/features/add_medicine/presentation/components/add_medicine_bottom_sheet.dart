@@ -11,35 +11,32 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-
 class AddMedicineBottomSheet extends StatelessWidget {
   const AddMedicineBottomSheet({super.key});
 
-  static show(BuildContext context){
+  static show(BuildContext context) {
     showModalBottomSheet(
-      context: context, 
+      context: context,
       isScrollControlled: true,
       useRootNavigator: true,
       builder: (context) => Container(
-        height: 0.85.sh,
-        decoration: BoxDecoration(
-          color: AppConfig.of(context).appTheme.backgroundColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+          height: 0.85.sh,
+          decoration: BoxDecoration(
+            color: AppConfig.of(context).appTheme.backgroundColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
           ),
-        ),
-        child: const AddMedicineBottomSheet()
-      ),
+          child: const AddMedicineBottomSheet()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddMedicineBloc(
-        context.read<MedicineRepositoryImpl>()
-      ),
+      create: (context) =>
+          AddMedicineBloc(context.read<MedicineRepositoryImpl>()),
       child: const AddMedicineBottomSheetView(),
     );
   }
@@ -48,27 +45,11 @@ class AddMedicineBottomSheet extends StatelessWidget {
 class AddMedicineBottomSheetView extends StatelessWidget {
   const AddMedicineBottomSheetView({super.key});
 
-  final List<Map<String, dynamic>>  medicineTypes = const [
-    {
-      "index": 0,
-      "img": "assets/icons/capsule.png",
-      "title": "Capsule"
-    },
-    {
-      "index": 1,
-      "img": "assets/icons/capsule 2.png",
-      "title": "Pills"
-    },
-    {
-      "index": 2,
-      "img": "assets/icons/capsule 3.png",
-      "title": "Eyedrops"
-    },
-    {
-      "index": 3,
-      "img": "assets/icons/capsule 4.png",
-      "title": "Liquid"
-    },
+  final List<Map<String, dynamic>> medicineTypes = const [
+    {"index": 0, "img": "assets/icons/capsule.png", "title": "Capsule"},
+    {"index": 1, "img": "assets/icons/capsule 2.png", "title": "Pills"},
+    {"index": 2, "img": "assets/icons/capsule 3.png", "title": "Eyedrops"},
+    {"index": 3, "img": "assets/icons/capsule 4.png", "title": "Liquid"},
   ];
 
   @override
@@ -77,20 +58,18 @@ class AddMedicineBottomSheetView extends StatelessWidget {
     final appTheme = AppConfig.of(context).appTheme;
     return BlocListener<AddMedicineBloc, AddMedicineState>(
       listener: (context, state) {
-        if(state is AddMedicineError){
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message))
-          );
+        if (state is AddMedicineError) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
         }
-        if(state is AddMedicineSuccess){
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Success"))
-          );
+        if (state is AddMedicineSuccess) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Success")));
           context.pop();
         }
-        if(state is AddMedicineLoading){
+        if (state is AddMedicineLoading) {
           LoadingDialog.show(context);
-        }else{
+        } else {
           LoadingDialog.close();
         }
       },
@@ -108,9 +87,8 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: appTheme.colorSecondary,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
+                        color: appTheme.colorSecondary,
+                        borderRadius: BorderRadius.circular(10)),
                     width: 64.w,
                     height: 6.h,
                   ),
@@ -121,13 +99,10 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: medicineTypes.map((medicineType) {
                       return GestureDetector(
-                        onTap: (){
-                          context.read<AddMedicineBloc>().add(
-                            CategoryChange(
-                              categoryName: medicineType['title']!, 
-                              categoryIndex: medicineType["index"]!
-                            )
-                          );
+                        onTap: () {
+                          context.read<AddMedicineBloc>().add(CategoryChange(
+                              categoryName: medicineType['title']!,
+                              categoryIndex: medicineType["index"]!));
                         },
                         child: Column(
                           children: [
@@ -136,17 +111,18 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                                 return current is AddMedicineUpdated;
                               },
                               builder: (context, state) {
-                                if(state is! AddMedicineUpdated){
+                                if (state is! AddMedicineUpdated) {
                                   return const SizedBox();
                                 }
                                 return Container(
                                   decoration: BoxDecoration(
-                                    color: appTheme.colorTertiary,
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: state.medicineCategoryIndex == medicineType["index"]!?
-                                      Border.all(color: appTheme.colorPrimary):
-                                      null
-                                  ),
+                                      color: appTheme.colorTertiary,
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: state.medicineCategoryIndex ==
+                                              medicineType["index"]!
+                                          ? Border.all(
+                                              color: appTheme.colorPrimary)
+                                          : null),
                                   height: 0.20.sw,
                                   width: 0.20.sw,
                                   padding: EdgeInsets.all(12.w),
@@ -157,9 +133,7 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                             SizedBox(
                               height: 8.h,
                             ),
-                            Text(
-                              medicineType['title']!
-                            )
+                            Text(medicineType['title']!)
                           ],
                         ),
                       );
@@ -172,9 +146,9 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                     label: "Medicine name",
                     validator: Validator.validateFullname,
                     onChange: (value) {
-                      context.read<AddMedicineBloc>().add(
-                        MedicineNameChange(medicineName: value)
-                      );
+                      context
+                          .read<AddMedicineBloc>()
+                          .add(MedicineNameChange(medicineName: value));
                     },
                   ),
                   SizedBox(
@@ -183,35 +157,33 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFieldAddMedicine(
-                          label: "Dose",
-                          validator: Validator.validateDose,
-                          onChange: (value) {
-                            context.read<AddMedicineBloc>().add(
-                              DoseChange(dose: value)
-                            );
-                          },
-                        )
-                      ),
+                          child: TextFieldAddMedicine(
+                        label: "Dose",
+                        validator: Validator.validateDose,
+                        onChange: (value) {
+                          context
+                              .read<AddMedicineBloc>()
+                              .add(DoseChange(dose: value));
+                        },
+                      )),
                       SizedBox(
                         width: 18.w,
                       ),
                       Expanded(
-                        child: TextFieldAddMedicine(
-                          label: "Type",
-                          validator: Validator.validateNonull("Type"),
-                          dropList: const <String>[
-                            "Tabs",
-                            "Spoons",
-                            "Drops",
-                          ],
-                          onChange: (value) {
-                            context.read<AddMedicineBloc>().add(
-                              DoseTypeChange(doseType: value)
-                            );
-                          },
-                        )
-                      ),
+                          child: TextFieldAddMedicine(
+                        label: "Type",
+                        validator: Validator.validateNonull("Type"),
+                        dropList: const <String>[
+                          "Tabs",
+                          "Spoons",
+                          "Drops",
+                        ],
+                        onChange: (value) {
+                          context
+                              .read<AddMedicineBloc>()
+                              .add(DoseTypeChange(doseType: value));
+                        },
+                      )),
                     ],
                   ),
                   SizedBox(
@@ -221,82 +193,74 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Flexible(
-                        child: TextFieldAddMedicine(
-                          label: "Stomach",
-                          validator: Validator.validateNonull("Stomach"),
-                          dropList: const <String>[
-                            "After eat",
-                            "Before eat"
-                          ],
-                          onChange: (value) {
-                            context.read<AddMedicineBloc>().add(
-                              StomachChange(stomach: value)
-                            );
-                          },
-                        )
-                      ),
+                          child: TextFieldAddMedicine(
+                        label: "Stomach",
+                        validator: Validator.validateNonull("Stomach"),
+                        dropList: const <String>["After eat", "Before eat"],
+                        onChange: (value) {
+                          context
+                              .read<AddMedicineBloc>()
+                              .add(StomachChange(stomach: value));
+                        },
+                      )),
                       SizedBox(
                         width: 18.w,
                       ),
                       Flexible(
-                        child: TextFieldAddMedicine(
-                          label: "Time",
-                          validator: Validator.validateNonull("Time"),
-                          dropList: List.generate(37, (index) {
-                            final now = DateTime.now().copyWith(
-                              hour: 6, 
-                              minute: 0, 
-                              second: 0, 
-                              millisecond: 0, 
-                              microsecond: 0
-                            );
-                            return now.add(Duration(minutes: 30*index));
-                          }),
-                          formatDropList: (val) {
-                            return DateFormat("hh:mm a").format(val);
-                          },
-                          onChange: (value) {
-                            context.read<AddMedicineBloc>().add(
-                              TimeChange(time: value)
-                            );
-                          },
-                        )
-                      ),
+                          child: TextFieldAddMedicine(
+                        label: "Time",
+                        validator: Validator.validateNonull("Time"),
+                        dropList: List.generate(37, (index) {
+                          final now = DateTime.now().copyWith(
+                              hour: 6,
+                              minute: 0,
+                              second: 0,
+                              millisecond: 0,
+                              microsecond: 0);
+                          return now.add(Duration(minutes: 30 * index));
+                        }),
+                        formatDropList: (val) {
+                          return DateFormat("hh:mm a").format(val);
+                        },
+                        onChange: (value) {
+                          context
+                              .read<AddMedicineBloc>()
+                              .add(TimeChange(time: value));
+                        },
+                      )),
                     ],
                   ),
                   SizedBox(
                     height: 18.h,
                   ),
                   TextFieldAddMedicine(
-                    label: "Comments", 
+                    label: "Comments",
                     isLarge: true,
                     onChange: (value) {
-                      context.read<AddMedicineBloc>().add(
-                        CommentsChange(comments: value)
-                      );
+                      context
+                          .read<AddMedicineBloc>()
+                          .add(CommentsChange(comments: value));
                     },
                   ),
                   SizedBox(
                     height: 18.h,
                   ),
                   ElevatedButton(
-                    onPressed: (){
-                      final authState = context.read<AuthenticationBloc>().state;
-                      if(authState is! AuthenticationSuccess){
+                    onPressed: () {
+                      final authState =
+                          context.read<AuthenticationBloc>().state;
+                      if (authState is! AuthenticationSuccess) {
                         return;
                       }
                       context.read<AddMedicineBloc>().add(
-                        AddMedicine(formKey: formKey, uid: authState.uid)
-                      );
+                          AddMedicine(formKey: formKey, uid: authState.uid));
                     },
                     style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      fixedSize: Size(1.sw, 0.18.sw),
-                      backgroundColor: appTheme.colorPrimary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(35)
-                      )
-                    ), 
+                        elevation: 0,
+                        fixedSize: Size(1.sw, 0.18.sw),
+                        backgroundColor: appTheme.colorPrimary,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35))),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12.w),
                       child: Row(
@@ -305,9 +269,7 @@ class AddMedicineBottomSheetView extends StatelessWidget {
                           Text(
                             "Add",
                             style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600
-                            ),
+                                fontSize: 16.sp, fontWeight: FontWeight.w600),
                           ),
                           Icon(
                             Icons.add,

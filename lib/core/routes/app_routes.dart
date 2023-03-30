@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class AppRoutes{
+class AppRoutes {
   static final router = GoRouter(
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      final isFailure = context.read<AuthenticationBloc>().state is AuthenticationFailure;
+      final isFailure =
+          context.read<AuthenticationBloc>().state is AuthenticationFailure;
       final onIsFailure = state.location == '/login';
       if (isFailure && !onIsFailure) return '/login';
       return null;
@@ -21,8 +22,9 @@ class AppRoutes{
       GoRoute(
         path: "/",
         redirect: (context, state) {
-          final isAuthenticated = context.read<AuthenticationBloc>().state is AuthenticationSuccess;
-          if(isAuthenticated){
+          final isAuthenticated =
+              context.read<AuthenticationBloc>().state is AuthenticationSuccess;
+          if (isAuthenticated) {
             return "/home";
           }
           return null;
@@ -30,10 +32,10 @@ class AppRoutes{
         builder: (context, state) {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              if(state is AuthenticationFailure){
+              if (state is AuthenticationFailure) {
                 context.go("/login");
               }
-              if(state is AuthenticationSuccess){
+              if (state is AuthenticationSuccess) {
                 context.go("/home");
               }
             },
@@ -46,57 +48,52 @@ class AppRoutes{
         },
       ),
       ShellRoute(
-        pageBuilder: (context, state, child) {
-          return CustomTransitionPage(
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            child: MainPage(
-              child: child
-            )
-          );
-        },
-        routes: [
-          GoRoute(
-            path: "/home",
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomePage()
+          pageBuilder: (context, state, child) {
+            return CustomTransitionPage(
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                child: MainPage(child: child));
+          },
+          routes: [
+            GoRoute(
+              path: "/home",
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: HomePage()),
             ),
-          ),
-          GoRoute(
-            path: "/timeline",
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: TimelinePage()
+            GoRoute(
+              path: "/timeline",
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: TimelinePage()),
             ),
-          ),
-          GoRoute(
-            path: "/prescription",
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: Center(child: Text("prescription"))
+            GoRoute(
+              path: "/prescription",
+              pageBuilder: (context, state) => const NoTransitionPage(
+                  child: Center(child: Text("prescription"))),
             ),
-          ),
-          GoRoute(
-            path: "/cart",
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: Center(child: Text("cart"))
+            GoRoute(
+              path: "/cart",
+              pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: Center(child: Text("cart"))),
             ),
-          ),
-          GoRoute(
-            path: "/settings",
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: Center(child: Text("settings"))
+            GoRoute(
+              path: "/settings",
+              pageBuilder: (context, state) => const NoTransitionPage(
+                  child: Center(child: Text("settings"))),
             ),
-          ),
-        ]
-      ),
-
+          ]),
       GoRoute(
         path: '/register',
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-            child: const RegisterPage(), 
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child,);
+            child: const RegisterPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
             },
           );
         },
@@ -105,9 +102,13 @@ class AppRoutes{
         path: '/login',
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-            child: const LoginPage(), 
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child,);
+            child: const LoginPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
             },
           );
         },

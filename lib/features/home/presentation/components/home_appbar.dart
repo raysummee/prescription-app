@@ -16,29 +16,26 @@ class HomeAppbar extends StatelessWidget with PreferredSizeWidget {
         padding: EdgeInsets.symmetric(horizontal: 14.w),
         child: NavigationToolbar(
           trailing: IconButton(
-            onPressed: (){}, 
-            icon: Image.asset(
-              "assets/icons/ri_search-line.png",
-              width: 30.w,
-            )
-          ),
+              onPressed: () {},
+              icon: Image.asset(
+                "assets/icons/ri_search-line.png",
+                width: 30.w,
+              )),
           leading: IconButton(
-            onPressed: (){}, 
-            icon: Image.asset(
-              "assets/icons/healthicons_doctor.png",
-              width: 30.w,
-            )
-          ),
+              onPressed: () {},
+              icon: Image.asset(
+                "assets/icons/healthicons_doctor.png",
+                width: 30.w,
+              )),
           middle: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 "Current location",
                 style: TextStyle(
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w600,
-                  color: appTheme.colorTextSecondary
-                ),
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w600,
+                    color: appTheme.colorTextSecondary),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -52,10 +49,8 @@ class HomeAppbar extends StatelessWidget with PreferredSizeWidget {
                   ),
                   Text(
                     "Guwahati",
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600
-                    ),
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
                   ),
                   Icon(
                     Icons.arrow_drop_down,
@@ -69,7 +64,7 @@ class HomeAppbar extends StatelessWidget with PreferredSizeWidget {
       ),
     );
   }
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

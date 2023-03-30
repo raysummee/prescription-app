@@ -17,5 +17,4 @@ abstract class AppTheme {
   late BoxDecoration bottomButtonDecoration;
 
   ButtonStyle buttonStyle(Color color, {bool withBorder});
-
 }

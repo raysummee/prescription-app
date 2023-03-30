@@ -15,9 +15,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Bloc.observer = CustomBlocObserver();
   runApp(const EntryPoint());
 }
@@ -28,13 +26,12 @@ class EntryPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppConfig(
-      appTheme: AppThemeLight(),
-      child: ScreenUtilInit(
-        builder: (BuildContext context, Widget? child) { 
-          return const App();
-        },
-      )
-    );
+        appTheme: AppThemeLight(),
+        child: ScreenUtilInit(
+          builder: (BuildContext context, Widget? child) {
+            return const App();
+          },
+        ));
   }
 }
 
@@ -54,9 +51,9 @@ class App extends StatelessWidget {
         ),
       ],
       child: BlocProvider(
-        create: (context) => AuthenticationBloc(
-          context.read<AuthenticationRepositoryImp>()
-        )..add(AuthenticationStarted()),
+        create: (context) =>
+            AuthenticationBloc(context.read<AuthenticationRepositoryImp>())
+              ..add(AuthenticationStarted()),
         child: MaterialApp.router(
           title: 'Flutter Demo',
           theme: appTheme.toThemeData(),

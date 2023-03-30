@@ -19,13 +19,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        if(state is! AuthenticationSuccess){
+        if (state is! AuthenticationSuccess) {
           return const SizedBox();
         }
         return BlocProvider(
-          create: (context) => HomeCubit(
-            context.read<MedicineRepositoryImpl>()
-          )..getUserMedicine(state.uid),
+          create: (context) => HomeCubit(context.read<MedicineRepositoryImpl>())
+            ..getUserMedicine(state.uid),
           child: const HomeView(),
         );
       },
@@ -44,15 +43,14 @@ class HomeView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.w),
               child: Text(
                 "Medicines Doses",
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600
-                ),
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
               ),
             ),
             SizedBox(
@@ -67,32 +65,30 @@ class HomeView extends StatelessWidget {
             ),
             BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
-                if(state is! HomeSuccess){
+                if (state is! HomeSuccess) {
                   return const DoseListShimmer();
                 }
-                if(state.medicines.isEmpty){
+                if (state.medicines.isEmpty) {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.h),
                     child: const Center(
-                      child: Text(
-                        "Nothing here now!!\n Added medicines will be shown here",
-                        textAlign: TextAlign.center,
-                      )
-                    ),
+                        child: Text(
+                      "Nothing here now!!\n Added medicines will be shown here",
+                      textAlign: TextAlign.center,
+                    )),
                   );
                 }
                 return DoseList(medicines: state.medicines);
               },
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.w),
               child: Text(
                 "Most Popular Product",
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600
-                ),
+                style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
               ),
             ),
             SizedBox(

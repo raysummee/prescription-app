@@ -17,10 +17,11 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => AuthenticationRepositoryImp(),
-        child: BlocProvider(
-          create: (context) => LoginCubit(context.read<AuthenticationRepositoryImp>()),
-          child: const LoginView(),
-        ),
+      child: BlocProvider(
+        create: (context) =>
+            LoginCubit(context.read<AuthenticationRepositoryImp>()),
+        child: const LoginView(),
+      ),
     );
   }
 }
@@ -44,24 +45,22 @@ class _LoginViewState extends State<LoginView> {
         listeners: [
           BlocListener<LoginCubit, LoginState>(
             listener: (context, state) {
-              if(state is LoginLoading){
+              if (state is LoginLoading) {
                 LoadingDialog.show(context);
               }
-              if(state is LoginSuccess){
+              if (state is LoginSuccess) {
                 LoadingDialog.close();
                 context.read<AuthenticationBloc>().add(AuthenticationStarted());
               }
-              if(state is LoginError){
+              if (state is LoginError) {
                 LoadingDialog.close();
-                Fluttertoast.showToast(
-                  msg: state.message
-                );
+                Fluttertoast.showToast(msg: state.message);
               }
             },
           ),
           BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              if(state is AuthenticationSuccess){
+              if (state is AuthenticationSuccess) {
                 context.go("/");
               }
             },
@@ -85,144 +84,118 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: Text(
                     "Welcome to",
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w700
-                    ),
+                    style:
+                        TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 0.2.sw, right: 22.w),
                   child: Text(
                     "The App",
-                    style: TextStyle(
-                      fontSize: 36.sp,
-                      fontWeight: FontWeight.w700
-                    ),
+                    style:
+                        TextStyle(fontSize: 36.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 22.w),
-                  decoration: BoxDecoration(
-                    color: appTheme.colorSecondary,
-                    borderRadius: BorderRadius.circular(9.w)
-                  ),
-                  alignment: Alignment.center,
-                  height: 60.w,
-                  child: TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: appTheme.colorTextSecondary
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 17.w
-                      )
-                    ),
-                  )
-                ),
+                    margin: EdgeInsets.symmetric(horizontal: 22.w),
+                    decoration: BoxDecoration(
+                        color: appTheme.colorSecondary,
+                        borderRadius: BorderRadius.circular(9.w)),
+                    alignment: Alignment.center,
+                    height: 60.w,
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                          hintText: "Email",
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: appTheme.colorTextSecondary),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 17.w)),
+                    )),
                 SizedBox(
                   height: 8.h,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 22.w),
-                  decoration: BoxDecoration(
-                    color: appTheme.colorSecondary,
-                    borderRadius: BorderRadius.circular(9.w)
-                  ),
-                  alignment: Alignment.center,
-                  height: 60.w,
-                  child: TextField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: appTheme.colorTextSecondary
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 17.w
-                      )
-                    ),
-                  )
-                ),
+                    margin: EdgeInsets.symmetric(horizontal: 22.w),
+                    decoration: BoxDecoration(
+                        color: appTheme.colorSecondary,
+                        borderRadius: BorderRadius.circular(9.w)),
+                    alignment: Alignment.center,
+                    height: 60.w,
+                    child: TextField(
+                      obscureText: true,
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                          hintText: "Password",
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: appTheme.colorTextSecondary),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 17.w)),
+                    )),
                 SizedBox(
                   height: 8.h,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 22.w),
-                  decoration: BoxDecoration(
-                    color: appTheme.colorSecondary,
-                    borderRadius: BorderRadius.circular(9.w)
-                  ),
-                  alignment: Alignment.center,
-                  height: 60.w,
-                  child: TextField(
-                    obscureText: true,
-                    controller: _confirmController,
-                    decoration: InputDecoration(
-                      hintText: "Confirm Password",
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: appTheme.colorTextSecondary
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 17.w
-                      )
-                    ),
-                  )
-                ),
+                    margin: EdgeInsets.symmetric(horizontal: 22.w),
+                    decoration: BoxDecoration(
+                        color: appTheme.colorSecondary,
+                        borderRadius: BorderRadius.circular(9.w)),
+                    alignment: Alignment.center,
+                    height: 60.w,
+                    child: TextField(
+                      obscureText: true,
+                      controller: _confirmController,
+                      decoration: InputDecoration(
+                          hintText: "Confirm Password",
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: appTheme.colorTextSecondary),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 17.w)),
+                    )),
                 SizedBox(
                   height: 23.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: ElevatedButton(
-                    onPressed: (){
-                      context.read<LoginCubit>().signup(
-                        email: _emailController.text, 
-                        password: _passwordController.text,
-                        confirm: _confirmController.text
-                      );
-                    }, 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: appTheme.colorPrimary,
-                      elevation: 0.0,
-                      fixedSize: Size(1.sw, 60.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      onPressed: () {
+                        context.read<LoginCubit>().signup(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            confirm: _confirmController.text);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: appTheme.colorPrimary,
+                        elevation: 0.0,
+                        fixedSize: Size(1.sw, 60.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      "Sign up"
-                    )
-                  ),
+                      child: const Text("Sign up")),
                 ),
                 Center(
                   child: TextButton(
-                    onPressed: () {
-                      context.pushReplacement("/login");
-                    }, 
-                    child: Text(
-                      "Login instead",
-                      style: TextStyle(
-                        color: appTheme.colorPrimary
-                      ),
-                    )
-                  ),
+                      onPressed: () {
+                        context.pushReplacement("/login");
+                      },
+                      child: Text(
+                        "Login instead",
+                        style: TextStyle(color: appTheme.colorPrimary),
+                      )),
                 )
               ],
             ),

@@ -1,8 +1,8 @@
 import 'package:app/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-extension AppThemeExtension on AppTheme{
-  ThemeData toThemeData(){
+extension AppThemeExtension on AppTheme {
+  ThemeData toThemeData() {
     return ThemeData(
       scaffoldBackgroundColor: backgroundColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -21,7 +21,9 @@ extension AppThemeExtension on AppTheme{
         ),
       ),
       appBarTheme: AppBarTheme(
-          elevation: 0, backgroundColor: colorAppbar, foregroundColor: colorTextPrimary),
+          elevation: 0,
+          backgroundColor: colorAppbar,
+          foregroundColor: colorTextPrimary),
     );
   }
 }

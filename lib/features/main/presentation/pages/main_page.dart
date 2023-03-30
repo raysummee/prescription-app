@@ -28,11 +28,16 @@ class _MainPageState extends State<MainPage> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: const [
-          BottomNavigationBarItem(icon: Icon(AppIcon.uilHomeAlt), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(AppIcon.mdiClockTimeSevenOutline), label: 'Timeline'),
-          BottomNavigationBarItem(icon: Icon(AppIcon.laPrescriptionBottle), label: 'Prescription'),
-          BottomNavigationBarItem(icon: Icon(AppIcon.carbonShoppingCart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(AppIcon.uilSetting), label: 'Settings'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcon.uilHomeAlt), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcon.mdiClockTimeSevenOutline), label: 'Timeline'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcon.laPrescriptionBottle), label: 'Prescription'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcon.carbonShoppingCart), label: 'Cart'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcon.uilSetting), label: 'Settings'),
         ],
       ),
     );

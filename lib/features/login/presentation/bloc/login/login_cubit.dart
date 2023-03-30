@@ -15,45 +15,48 @@ class LoginCubit extends Cubit<LoginState> {
 
   login({required String email, required String password}) async {
     emit(LoginLoading());
-    try{
+    try {
       var validatorError = Validator.validateEmail(email);
-      if(validatorError!=null){
+      if (validatorError != null) {
         throw AppException(message: validatorError);
       }
       validatorError = Validator.validatePassword(password);
-      if(validatorError!=null){
+      if (validatorError != null) {
         throw AppException(message: validatorError);
       }
       await _repository.login(email: email, password: password);
       emit(LoginSuccess());
-    }on FirebaseException catch (_){
+    } on FirebaseException catch (_) {
       emit(const LoginError(message: "Invalid email or password"));
       rethrow;
-    } on AppException catch(err){
+    } on AppException catch (err) {
       emit(LoginError(message: err.message));
     }
   }
 
-  signup({required String email, required String password, required String confirm}) async {
+  signup(
+      {required String email,
+      required String password,
+      required String confirm}) async {
     emit(LoginLoading());
-    try{
+    try {
       var validatorError = Validator.validateEmail(email);
-      if(validatorError!=null){
+      if (validatorError != null) {
         throw AppException(message: validatorError);
       }
       validatorError = Validator.validatePassword(password);
-      if(validatorError!=null){
+      if (validatorError != null) {
         throw AppException(message: validatorError);
       }
-      if(password!=confirm){
+      if (password != confirm) {
         throw AppException(message: "password doesn't match confirm password");
       }
       await _repository.signup(email: email, password: password);
       emit(LoginSuccess());
-    }on FirebaseException catch (_){
+    } on FirebaseException catch (_) {
       emit(const LoginError(message: "Error creating account"));
       rethrow;
-    }on AppException catch(err){
+    } on AppException catch (err) {
       emit(LoginError(message: err.message));
     }
   }

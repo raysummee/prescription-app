@@ -20,20 +20,16 @@ class DoseListShimmer extends StatelessWidget {
         separatorBuilder: (context, index) => SizedBox(width: 8.w),
         itemBuilder: (context, index) {
           return Shimmer.fromColors(
-            baseColor: Colors.grey.shade300, 
-            highlightColor: Colors.grey.shade100,
-            child: Container(
-              decoration: BoxDecoration(
-                color: appTheme.colorAccentPrimary,
-                borderRadius: BorderRadius.circular(28.w),
-                border: Border.all(
-                  color: appTheme.colorShadow
-                )
-              ),
-              width: 0.4.sw,
-              height: 0.5.sw,
-            )
-          );
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: appTheme.colorAccentPrimary,
+                    borderRadius: BorderRadius.circular(28.w),
+                    border: Border.all(color: appTheme.colorShadow)),
+                width: 0.4.sw,
+                height: 0.5.sw,
+              ));
         },
       ),
     );

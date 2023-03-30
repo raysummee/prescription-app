@@ -8,8 +8,11 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeInitial extends HomeState {}
+
 class HomeLoading extends HomeState {}
+
 class HomeFailed extends HomeState {}
+
 class HomeSuccess extends HomeState {
   final List<MedicineModel> medicines;
   const HomeSuccess({
