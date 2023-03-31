@@ -19,10 +19,14 @@ class TimelineRepositoryImpl extends TimelineRepository {
     final key =
         DateTime(selectedDate.year, selectedDate.month, selectedDate.day)
             .toString();
+
+    //fetching medicine from online server
     final dosesFetched = medicines
         .map((e) => DoseModel(medicineModel: e, doseStatus: DoseEnums.pending))
         .sortedByCompare(
             (element) => element.medicineModel.time, (a, b) => a.compareTo(b));
+
+    //if doesn't have any local data, return online fetch data
     if (!box.containsKey(key)) {
       return dosesFetched;
     }
@@ -30,9 +34,13 @@ class TimelineRepositoryImpl extends TimelineRepository {
     if (dosesRaw == null) {
       return [];
     }
+
+    //fetching local doses from local database
     final dosesLocal = dosesRaw
         .map((e) => DoseModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
+
+    //if new medicine is added in online server, add return new medicine + local database
     for (final doseFetch in dosesFetched) {
       bool hasData = dosesLocal.any(
           (element) => element.medicineModel.id == doseFetch.medicineModel.id);
@@ -40,6 +48,7 @@ class TimelineRepositoryImpl extends TimelineRepository {
         dosesLocal.add(doseFetch);
       }
     }
+    //sort by time asc
     final doses = dosesLocal.sortedByCompare(
         (element) => element.medicineModel.time, (a, b) => a.compareTo(b));
     return doses;
