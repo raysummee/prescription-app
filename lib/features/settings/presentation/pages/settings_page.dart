@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -31,6 +32,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             onTap: () {
               context.read<AuthenticationBloc>().add(AuthenticationSignedOut());
+              context.go("/login");
             },
             tileColor: AppConfig.of(context).appTheme.colorSecondary,
             minVerticalPadding: 24,
