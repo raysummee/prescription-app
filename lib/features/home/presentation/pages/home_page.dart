@@ -1,3 +1,4 @@
+import 'package:app/features/home/data/repository/medicine_fam_repository.dart';
 import 'package:app/features/home/presentation/bloc/home/home_cubit.dart';
 import 'package:app/features/home/presentation/components/dose_list.dart';
 import 'package:app/features/home/presentation/components/dose_list_shimmer.dart';
@@ -9,22 +10,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../bloc/medicine_fam/medicine_fam_cubit.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-      builder: (context, state) {
-        if (state is! AuthenticationSuccess) {
-          return const SizedBox();
-        }
-        return BlocProvider(
-          create: (context) => HomeCubit(context.read<MedicineRepositoryImpl>())
-            ..getUserMedicine(state.uid),
-          child: const HomeView(),
-        );
-      },
+    return RepositoryProvider(
+      create: (context) => MedicineFamRepositoryImpl(),
+      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+          if (state is! AuthenticationSuccess) {
+            return const SizedBox();
+          }
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    HomeCubit(context.read<MedicineRepositoryImpl>())
+                      ..getUserMedicine(state.uid),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    MedicineFamCubit(context.read<MedicineFamRepositoryImpl>())
+                      ..getUserMedicine(),
+              ),
+            ],
+            child: const HomeView(),
+          );
+        },
+      ),
     );
   }
 }
