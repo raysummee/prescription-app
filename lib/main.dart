@@ -64,7 +64,7 @@ class App extends StatelessWidget {
           ),
         ],
         child: MaterialApp.router(
-          title: 'Flutter Demo',
+          title: 'HealthAid',
           theme: appTheme.toThemeData(),
           routerConfig: AppRoutes.router,
         ),
