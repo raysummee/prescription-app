@@ -9,7 +9,7 @@ import 'package:app/features/shared/components/horz_calender.dart';
 import 'package:app/features/timeline/data/enums/dose_enums.dart';
 import 'package:app/features/timeline/data/models/dose_model.dart';
 import 'package:app/features/timeline/data/repository/timeline_repository.dart';
-import 'package:app/features/timeline/presentation/bloc/timeline_cubit.dart';
+import 'package:app/features/timeline/presentation/bloc/timeline/timeline_cubit.dart';
 import 'package:app/features/timeline/presentation/components/dashed_line_vertical_line.dart';
 import 'package:app/features/timeline/presentation/components/schedule_atom_item.dart';
 import 'package:flutter/material.dart';
