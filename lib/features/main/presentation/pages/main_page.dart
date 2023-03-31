@@ -33,10 +33,6 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
               icon: Icon(AppIcon.mdiClockTimeSevenOutline), label: 'Timeline'),
           BottomNavigationBarItem(
-              icon: Icon(AppIcon.laPrescriptionBottle), label: 'Prescription'),
-          BottomNavigationBarItem(
-              icon: Icon(AppIcon.carbonShoppingCart), label: 'Cart'),
-          BottomNavigationBarItem(
               icon: Icon(AppIcon.uilSetting), label: 'Settings'),
         ],
       ),
@@ -52,14 +48,8 @@ class _MainPageState extends State<MainPage> {
     if (location.startsWith('/timeline')) {
       return 1;
     }
-    if (location.startsWith('/prescription')) {
-      return 2;
-    }
-    if (location.startsWith('/cart')) {
-      return 3;
-    }
     if (location.startsWith('/settings')) {
-      return 4;
+      return 2;
     }
     return 0;
   }
@@ -71,10 +61,6 @@ class _MainPageState extends State<MainPage> {
       case 1:
         return context.go('/timeline');
       case 2:
-        return context.go('/prescription');
-      case 3:
-        return context.go('/cart');
-      case 4:
         return context.go('/settings');
     }
   }

@@ -69,16 +69,6 @@ class AppRoutes {
                   const NoTransitionPage(child: TimelinePage()),
             ),
             GoRoute(
-              path: "/prescription",
-              pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Center(child: Text("prescription"))),
-            ),
-            GoRoute(
-              path: "/cart",
-              pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: Center(child: Text("cart"))),
-            ),
-            GoRoute(
               path: "/settings",
               pageBuilder: (context, state) =>
                   const NoTransitionPage(child: SettingsPage()),
