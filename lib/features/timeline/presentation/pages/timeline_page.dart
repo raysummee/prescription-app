@@ -2,7 +2,9 @@ import 'package:app/core/config/app_config.dart';
 import 'package:app/core/theme/app_theme.dart';
 import 'package:app/features/add_medicine/presentation/components/add_medicine_bottom_sheet.dart';
 import 'package:app/features/home/presentation/components/medicine_list.dart';
+import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/medicine/data/models/medicine_model.dart';
+import 'package:app/features/medicine/data/repository/medicine_repository.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
 import 'package:app/features/timeline/data/enums/dose_enums.dart';
 import 'package:app/features/timeline/data/models/dose_model.dart';
@@ -20,11 +22,20 @@ class TimelinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => TimelineRepositoryImpl(),
-      child: BlocProvider(
-        create: (context) =>
-            TimelineCubit(context.read<TimelineRepositoryImpl>())..fetchDose(),
-        child: const TimelineView(),
+      create: (context) =>
+          TimelineRepositoryImpl(context.read<MedicineRepositoryImpl>()),
+      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, state) {
+          if (state is! AuthenticationSuccess) {
+            return const SizedBox();
+          }
+          return BlocProvider(
+            create: (context) =>
+                TimelineCubit(context.read<TimelineRepositoryImpl>())
+                  ..fetchDose(state.uid),
+            child: const TimelineView(),
+          );
+        },
       ),
     );
   }

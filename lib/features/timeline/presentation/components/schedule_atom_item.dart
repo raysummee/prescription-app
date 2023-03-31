@@ -79,8 +79,11 @@ class ScheduleAtomItem extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
                   ),
+                  SizedBox(
+                    height: 2.h,
+                  ),
                   Text(
-                    "${doseModel.medicineModel.dose} ${doseModel.medicineModel.doseType}, ${doseModel.medicineModel.stomach}",
+                    "${doseModel.medicineModel.dose.toStringAsPrecision(2)} ${doseModel.medicineModel.doseType}, ${doseModel.medicineModel.stomach}",
                     style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,

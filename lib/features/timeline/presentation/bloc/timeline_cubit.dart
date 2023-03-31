@@ -9,10 +9,10 @@ class TimelineCubit extends Cubit<TimelineState> {
   TimelineCubit(this._repository) : super(TimelineInitial());
   final TimelineRepository _repository;
 
-  fetchDose() async {
+  fetchDose(String uid) async {
     try {
       emit(TimelineLoading());
-      final doses = await _repository.fetchDoses();
+      final doses = await _repository.fetchDoses(uid);
       emit(TimelineLoaded(doses));
     } on Exception catch (err) {
       emit(TimelineError(err.toString()));
