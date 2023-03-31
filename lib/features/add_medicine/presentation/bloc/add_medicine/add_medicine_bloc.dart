@@ -92,6 +92,7 @@ class AddMedicineBloc extends Bloc<AddMedicineEvent, AddMedicineState> {
         return;
       }
       MedicineModel addMedicineModel = MedicineModel(
+          id: "new",
           medicineCategoryIndex: stateUpdated.medicineCategoryIndex!,
           medicineCategoryName: stateUpdated.medicineCategoryName!,
           medicineName: stateUpdated.medicineName!,

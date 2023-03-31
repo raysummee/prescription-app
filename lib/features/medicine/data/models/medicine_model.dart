@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class MedicineModel extends Equatable {
+  final String id;
   final int medicineCategoryIndex;
   final String medicineCategoryName;
   final String medicineName;
@@ -13,6 +12,7 @@ class MedicineModel extends Equatable {
   final DateTime time;
   final String? comments;
   const MedicineModel({
+    required this.id,
     required this.medicineCategoryIndex,
     required this.medicineCategoryName,
     required this.medicineName,
@@ -26,6 +26,7 @@ class MedicineModel extends Equatable {
   @override
   List<Object?> get props {
     return [
+      id,
       medicineCategoryIndex,
       medicineCategoryName,
       medicineName,
@@ -38,6 +39,7 @@ class MedicineModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'medicineCategoryIndex': medicineCategoryIndex,
         'medicineCategoryName': medicineCategoryName,
         'medicineName': medicineName,
@@ -50,6 +52,7 @@ class MedicineModel extends Equatable {
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) {
     return MedicineModel(
+      id: json['id'],
       medicineCategoryIndex: json['medicineCategoryIndex']!.toInt(),
       medicineCategoryName: json['medicineCategoryName'],
       medicineName: json['medicineName'],
@@ -63,6 +66,7 @@ class MedicineModel extends Equatable {
 
   factory MedicineModel.fromQueryDocumentSnapshot(
       QueryDocumentSnapshot snapshot) {
-    return MedicineModel.fromJson(snapshot.data() as Map<String, dynamic>);
+    return MedicineModel.fromJson(
+        {...snapshot.data() as Map<String, dynamic>, 'id': snapshot.id});
   }
 }

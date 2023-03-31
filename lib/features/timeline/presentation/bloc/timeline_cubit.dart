@@ -26,8 +26,8 @@ class TimelineCubit extends Cubit<TimelineState> {
     }
     final stateLoaded = state as TimelineLoaded;
     final doseList = [...stateLoaded.doses];
-    final index = doseList.indexWhere((element) =>
-        element.medicineModel.medicineName == dose.medicineModel.medicineName);
+    final index = doseList.indexWhere(
+        (element) => element.medicineModel.id == dose.medicineModel.id);
     final exisitingDoseType = dose.doseStatus;
     DoseEnums newDoseType;
     switch (exisitingDoseType) {

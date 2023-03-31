@@ -1,6 +1,7 @@
 import 'package:app/features/medicine/domain/repository/medicine_repository.dart';
 import 'package:app/features/timeline/data/models/dose_model.dart';
 import 'package:app/features/timeline/domain/repository/timeline_repository.dart';
+import 'package:collection/collection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../enums/dose_enums.dart';
@@ -22,6 +23,8 @@ class TimelineRepositoryImpl extends TimelineRepository {
       final doses = medicines
           .map(
               (e) => DoseModel(medicineModel: e, doseStatus: DoseEnums.pending))
+          .sortedByCompare(
+              (element) => element.medicineModel.time, (a, b) => a.compareTo(b))
           .toList();
       return doses;
     }
