@@ -15,7 +15,8 @@ class AppRoutes {
     redirect: (context, state) {
       final isFailure =
           context.read<AuthenticationBloc>().state is AuthenticationFailure;
-      final onIsFailure = state.location == '/login';
+      final onIsFailure =
+          state.location == '/login' || state.location == '/register';
       if (isFailure && !onIsFailure) return '/login';
       return null;
     },
