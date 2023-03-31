@@ -1,12 +1,54 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/core/theme/app_theme.dart';
 import 'package:app/features/add_medicine/presentation/components/add_medicine_bottom_sheet.dart';
+import 'package:app/features/home/presentation/components/medicine_list.dart';
+import 'package:app/features/medicine/data/models/medicine_model.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
+import 'package:app/features/timeline/presentation/components/dashed_line_vertical_line.dart';
+import 'package:app/features/timeline/presentation/components/schedule_atom_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TimelinePage extends StatelessWidget {
+class TimelinePage extends StatefulWidget {
   const TimelinePage({super.key});
+
+  @override
+  State<TimelinePage> createState() => _TimelinePageState();
+}
+
+class _TimelinePageState extends State<TimelinePage> {
+  late List<MedicineModel> medicineModels;
+
+  @override
+  void initState() {
+    medicineModels = [
+      MedicineModel(
+          medicineCategoryIndex: 0,
+          medicineCategoryName: "Capsule",
+          medicineName: "Zincovit CL",
+          dose: 2,
+          doseType: "Spoon",
+          stomach: "After meal",
+          time: DateTime.now()),
+      MedicineModel(
+          medicineCategoryIndex: 0,
+          medicineCategoryName: "Capsule",
+          medicineName: "Zincovit CL",
+          dose: 2,
+          doseType: "Spoon",
+          stomach: "After meal",
+          time: DateTime.now()),
+      MedicineModel(
+          medicineCategoryIndex: 0,
+          medicineCategoryName: "Capsule",
+          medicineName: "Zincovit CL",
+          dose: 2,
+          doseType: "Spoon",
+          stomach: "After meal",
+          time: DateTime.now()),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +87,21 @@ class TimelinePage extends StatelessWidget {
                 ],
               ),
             ),
+            Flexible(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: ListView.builder(
+                    itemCount: medicineModels.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ScheduleAtomItem(
+                        isFirstItem: index == 0,
+                        isLastItem: index == medicineModels.length - 1,
+                        medicineModel: medicineModels[index],
+                      );
+                    },
+                  )),
+            )
           ],
         ),
       ),
