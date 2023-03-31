@@ -1,5 +1,7 @@
 import 'package:app/core/config/app_config.dart';
 import 'package:app/features/medicine/data/models/medicine_model.dart';
+import 'package:app/features/timeline/data/enums/dose_enums.dart';
+import 'package:app/features/timeline/data/models/dose_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -11,12 +13,12 @@ class ScheduleAtomItem extends StatelessWidget {
       {super.key,
       this.isFirstItem = false,
       this.isLastItem = false,
-      required this.medicineModel,
-      this.prevMedicineModel});
+      required this.doseModel,
+      this.prevDoseModel});
   final bool isFirstItem;
   final bool isLastItem;
-  final MedicineModel medicineModel;
-  final MedicineModel? prevMedicineModel;
+  final DoseModel doseModel;
+  final DoseModel? prevDoseModel;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,11 @@ class ScheduleAtomItem extends StatelessWidget {
   Widget _buildTime() {
     return Builder(builder: (context) {
       final appTheme = AppConfig.of(context).appTheme;
-      if (prevMedicineModel != null &&
-          prevMedicineModel!.time.minute == medicineModel.time.minute &&
-          prevMedicineModel!.time.hour == medicineModel.time.hour) {
+      if (prevDoseModel != null &&
+          prevDoseModel!.medicineModel.time.minute ==
+              doseModel.medicineModel.time.minute &&
+          prevDoseModel!.medicineModel.time.hour ==
+              doseModel.medicineModel.time.hour) {
         return SizedBox(
           height: 55.h,
           width: 0.15.sw,
@@ -48,7 +52,7 @@ class ScheduleAtomItem extends StatelessWidget {
                 ? Alignment.bottomCenter
                 : Alignment.center,
         child: Text(
-          DateFormat("h:mm a").format(medicineModel.time),
+          DateFormat("h:mm a").format(doseModel.medicineModel.time),
           style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
@@ -64,7 +68,7 @@ class ScheduleAtomItem extends StatelessWidget {
       return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
-            color: const Color.fromRGBO(231, 244, 235, 1)),
+            color: doseModel.doseStatus.color),
         height: 55.h,
         width: 0.6.sw,
         padding: EdgeInsets.symmetric(horizontal: 18.w),
@@ -77,12 +81,12 @@ class ScheduleAtomItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    medicineModel.medicineName,
+                    doseModel.medicineModel.medicineName,
                     style:
                         TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    "${medicineModel.dose} ${medicineModel.doseType}, ${medicineModel.stomach}",
+                    "${doseModel.medicineModel.dose} ${doseModel.medicineModel.doseType}, ${doseModel.medicineModel.stomach}",
                     style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
@@ -91,10 +95,14 @@ class ScheduleAtomItem extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(
-              "assets/icons/done.png",
-              height: 20.h,
-            )
+            if (doseModel.medicineModel.time.isBefore(DateTime.now()))
+              GestureDetector(
+                onTap: () {},
+                child: Image.asset(
+                  doseModel.doseStatus.iconUri,
+                  height: 20.h,
+                ),
+              )
           ],
         ),
       );
@@ -105,18 +113,16 @@ class ScheduleAtomItem extends StatelessWidget {
     return Builder(builder: (context) {
       final appTheme = AppConfig.of(context).appTheme;
       bool isShowDot = true;
-      if (prevMedicineModel != null &&
-          prevMedicineModel!.time.minute == medicineModel.time.minute &&
-          prevMedicineModel!.time.hour == medicineModel.time.hour) {
+      if (prevDoseModel != null &&
+          prevDoseModel!.medicineModel.time.minute ==
+              doseModel.medicineModel.time.minute &&
+          prevDoseModel!.medicineModel.time.hour ==
+              doseModel.medicineModel.time.hour) {
         isShowDot = false;
       }
       return SizedBox(
           child: Stack(
-        alignment: isFirstItem
-            ? Alignment.topCenter
-            : isLastItem
-                ? Alignment.bottomCenter
-                : Alignment.center,
+        alignment: isFirstItem ? Alignment.topCenter : Alignment.center,
         children: [
           SizedBox(
               width: 1, height: 55.h, child: const DashedLineVerticalLine()),

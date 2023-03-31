@@ -4,6 +4,8 @@ import 'package:app/features/add_medicine/presentation/components/add_medicine_b
 import 'package:app/features/home/presentation/components/medicine_list.dart';
 import 'package:app/features/medicine/data/models/medicine_model.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
+import 'package:app/features/timeline/data/enums/dose_enums.dart';
+import 'package:app/features/timeline/data/models/dose_model.dart';
 import 'package:app/features/timeline/presentation/components/dashed_line_vertical_line.dart';
 import 'package:app/features/timeline/presentation/components/schedule_atom_item.dart';
 import 'package:flutter/material.dart';
@@ -17,35 +19,51 @@ class TimelinePage extends StatefulWidget {
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  late List<MedicineModel> medicineModels;
+  late List<DoseModel> doseModels;
 
   @override
   void initState() {
-    medicineModels = [
-      MedicineModel(
-          medicineCategoryIndex: 0,
-          medicineCategoryName: "Capsule",
-          medicineName: "Zincovit CL",
-          dose: 2,
-          doseType: "Spoon",
-          stomach: "After meal",
-          time: DateTime.now()),
-      MedicineModel(
-          medicineCategoryIndex: 0,
-          medicineCategoryName: "Capsule",
-          medicineName: "Zincovit CL",
-          dose: 2,
-          doseType: "Spoon",
-          stomach: "After meal",
-          time: DateTime.now()),
-      MedicineModel(
-          medicineCategoryIndex: 0,
-          medicineCategoryName: "Capsule",
-          medicineName: "Zincovit CL",
-          dose: 2,
-          doseType: "Spoon",
-          stomach: "After meal",
-          time: DateTime.now().add(const Duration(hours: 1))),
+    doseModels = [
+      DoseModel(
+          medicineModel: MedicineModel(
+              medicineCategoryIndex: 0,
+              medicineCategoryName: "Capsule",
+              medicineName: "Zincovit CL",
+              dose: 2,
+              doseType: "Spoon",
+              stomach: "After meal",
+              time: DateTime.now().subtract(const Duration(minutes: 30))),
+          doseStatus: DoseEnums.pending),
+      DoseModel(
+          medicineModel: MedicineModel(
+              medicineCategoryIndex: 0,
+              medicineCategoryName: "Capsule",
+              medicineName: "Zincovit CL",
+              dose: 2,
+              doseType: "Spoon",
+              stomach: "After meal",
+              time: DateTime.now()),
+          doseStatus: DoseEnums.taken),
+      DoseModel(
+          medicineModel: MedicineModel(
+              medicineCategoryIndex: 0,
+              medicineCategoryName: "Capsule",
+              medicineName: "Zincovit CL",
+              dose: 2,
+              doseType: "Spoon",
+              stomach: "After meal",
+              time: DateTime.now()),
+          doseStatus: DoseEnums.notTaken),
+      DoseModel(
+          medicineModel: MedicineModel(
+              medicineCategoryIndex: 0,
+              medicineCategoryName: "Capsule",
+              medicineName: "Zincovit CL",
+              dose: 2,
+              doseType: "Spoon",
+              stomach: "After meal",
+              time: DateTime.now().add(const Duration(hours: 1))),
+          doseStatus: DoseEnums.pending),
     ];
     super.initState();
   }
@@ -91,7 +109,7 @@ class _TimelinePageState extends State<TimelinePage> {
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: ListView.separated(
-                    itemCount: medicineModels.length,
+                    itemCount: doseModels.length,
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
                       return Row(
@@ -113,10 +131,9 @@ class _TimelinePageState extends State<TimelinePage> {
                     itemBuilder: (context, index) {
                       return ScheduleAtomItem(
                         isFirstItem: index == 0,
-                        isLastItem: index == medicineModels.length - 1,
-                        medicineModel: medicineModels[index],
-                        prevMedicineModel:
-                            index > 0 ? medicineModels[index - 1] : null,
+                        isLastItem: index == doseModels.length - 1,
+                        doseModel: doseModels[index],
+                        prevDoseModel: index > 0 ? doseModels[index - 1] : null,
                       );
                     },
                   )),
