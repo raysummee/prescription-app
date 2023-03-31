@@ -12,11 +12,9 @@ class ScheduleAtomItem extends StatelessWidget {
   const ScheduleAtomItem(
       {super.key,
       this.isFirstItem = false,
-      this.isLastItem = false,
       required this.doseModel,
       this.prevDoseModel});
   final bool isFirstItem;
-  final bool isLastItem;
   final DoseModel doseModel;
   final DoseModel? prevDoseModel;
 
@@ -46,11 +44,7 @@ class ScheduleAtomItem extends StatelessWidget {
       return Container(
         height: 55.h,
         width: 0.15.sw,
-        alignment: isFirstItem
-            ? Alignment.topCenter
-            : isLastItem
-                ? Alignment.bottomCenter
-                : Alignment.center,
+        alignment: isFirstItem ? Alignment.topCenter : Alignment.center,
         child: Text(
           DateFormat("h:mm a").format(doseModel.medicineModel.time),
           style: TextStyle(

@@ -131,7 +131,6 @@ class _TimelinePageState extends State<TimelinePage> {
                     itemBuilder: (context, index) {
                       return ScheduleAtomItem(
                         isFirstItem: index == 0,
-                        isLastItem: index == doseModels.length - 1,
                         doseModel: doseModels[index],
                         prevDoseModel: index > 0 ? doseModels[index - 1] : null,
                       );
