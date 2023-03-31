@@ -17,8 +17,7 @@ class TimelineRepositoryImpl extends TimelineRepository {
     final medicines = await _medicineRepository.getUseMedicines(uid);
     final box = await Hive.openBox(_databaseName);
     final key =
-        DateTime(selectedDate.year, selectedDate.month, selectedDate.day)
-            .toString();
+        "${selectedDate.year} ${selectedDate.month} ${selectedDate.day}";
 
     //fetching medicine from online server
     final dosesFetched = medicines
@@ -59,8 +58,7 @@ class TimelineRepositoryImpl extends TimelineRepository {
       String uid, DateTime selectedDate, List<DoseModel> doses) async {
     final box = await Hive.openBox(_databaseName);
     final key =
-        DateTime(selectedDate.year, selectedDate.month, selectedDate.day)
-            .toString();
+        "${selectedDate.year} ${selectedDate.month} ${selectedDate.day}";
     await box.put(key, doses.map((e) => e.toJson()).toList());
   }
 }

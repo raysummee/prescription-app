@@ -2,7 +2,7 @@ import 'package:app/core/config/app_config.dart';
 import 'package:app/core/theme/light_theme.dart';
 import 'package:app/features/login/data/repository/authentication_repository.dart';
 import 'package:app/features/medicine/data/repository/medicine_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:app/features/timeline/presentation/bloc/data_pick/cubit/data_pick_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,10 +52,17 @@ class App extends StatelessWidget {
           create: (context) => MedicineRepositoryImpl(),
         ),
       ],
-      child: BlocProvider(
-        create: (context) =>
-            AuthenticationBloc(context.read<AuthenticationRepositoryImp>())
-              ..add(AuthenticationStarted()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                AuthenticationBloc(context.read<AuthenticationRepositoryImp>())
+                  ..add(AuthenticationStarted()),
+          ),
+          BlocProvider(
+            create: (context) => DatePickCubit(),
+          ),
+        ],
         child: MaterialApp.router(
           title: 'Flutter Demo',
           theme: appTheme.toThemeData(),

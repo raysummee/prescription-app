@@ -1,14 +1,10 @@
 import 'package:app/core/config/app_config.dart';
-import 'package:app/core/theme/app_theme.dart';
 import 'package:app/features/add_medicine/presentation/components/add_medicine_bottom_sheet.dart';
-import 'package:app/features/home/presentation/components/medicine_list.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
-import 'package:app/features/medicine/data/models/medicine_model.dart';
 import 'package:app/features/medicine/data/repository/medicine_repository.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
-import 'package:app/features/timeline/data/enums/dose_enums.dart';
-import 'package:app/features/timeline/data/models/dose_model.dart';
 import 'package:app/features/timeline/data/repository/timeline_repository.dart';
+import 'package:app/features/timeline/presentation/bloc/data_pick/cubit/data_pick_cubit.dart';
 import 'package:app/features/timeline/presentation/bloc/timeline/timeline_cubit.dart';
 import 'package:app/features/timeline/presentation/components/dashed_line_vertical_line.dart';
 import 'package:app/features/timeline/presentation/components/schedule_atom_item.dart';
@@ -25,15 +21,19 @@ class TimelinePage extends StatelessWidget {
       create: (context) =>
           TimelineRepositoryImpl(context.read<MedicineRepositoryImpl>()),
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state is! AuthenticationSuccess) {
+        builder: (context, authState) {
+          if (authState is! AuthenticationSuccess) {
             return const SizedBox();
           }
-          return BlocProvider(
-            create: (context) =>
-                TimelineCubit(context.read<TimelineRepositoryImpl>())
-                  ..fetchDose(state.uid, DateTime(2023)),
-            child: const TimelineView(),
+          return BlocBuilder<DatePickCubit, DatePickState>(
+            builder: (context, dateState) {
+              return BlocProvider(
+                create: (context) =>
+                    TimelineCubit(context.read<TimelineRepositoryImpl>())
+                      ..fetchDose(authState.uid, dateState.selectedDate),
+                child: const TimelineView(),
+              );
+            },
           );
         },
       ),
@@ -53,7 +53,18 @@ class TimelineView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HorzCalender(large: true),
+            HorzCalender(
+                large: true,
+                onDateClick: (dateTime) {
+                  context.read<DatePickCubit>().selectDate(dateTime);
+                  final authState = context.read<AuthenticationBloc>().state;
+                  if (authState is! AuthenticationSuccess) {
+                    return;
+                  }
+                  context
+                      .read<TimelineCubit>()
+                      .fetchDose(authState.uid, dateTime);
+                }),
             SizedBox(
               height: 20.h,
             ),
@@ -72,11 +83,13 @@ class TimelineView extends StatelessWidget {
                       final authState =
                           context.read<AuthenticationBloc>().state;
                       final timelineState = context.read<TimelineCubit>();
+                      final datePickState = context.read<DatePickCubit>().state;
                       await AddMedicineBottomSheet.show(context);
                       if (authState is! AuthenticationSuccess) {
                         return;
                       }
-                      timelineState.fetchDose(authState.uid, DateTime(2023));
+                      timelineState.fetchDose(
+                          authState.uid, datePickState.selectedDate);
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: appTheme.colorPrimary,

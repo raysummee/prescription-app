@@ -1,9 +1,6 @@
-import 'package:app/core/config/app_config.dart';
-import 'package:app/core/theme/app_theme.dart';
 import 'package:app/features/home/presentation/bloc/home_cubit.dart';
 import 'package:app/features/home/presentation/components/dose_list.dart';
 import 'package:app/features/home/presentation/components/dose_list_shimmer.dart';
-import 'package:app/features/home/presentation/components/home_appbar.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/medicine/data/repository/medicine_repository.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
@@ -58,7 +55,9 @@ class HomeView extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 14.w),
-              child: const HorzCalender(),
+              child: HorzCalender(
+                onDateClick: (dateTime) {},
+              ),
             ),
             SizedBox(
               height: 30.h,

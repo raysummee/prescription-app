@@ -2,6 +2,7 @@ import 'package:app/core/config/app_config.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/timeline/data/enums/dose_enums.dart';
 import 'package:app/features/timeline/data/models/dose_model.dart';
+import 'package:app/features/timeline/presentation/bloc/data_pick/cubit/data_pick_cubit.dart';
 import 'package:app/features/timeline/presentation/bloc/timeline/timeline_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,12 +99,12 @@ class ScheduleAtomItem extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   final authState = context.read<AuthenticationBloc>().state;
+                  final dateState = context.read<DatePickCubit>().state;
                   if (authState is! AuthenticationSuccess) {
                     return;
                   }
-                  context
-                      .read<TimelineCubit>()
-                      .updateDose(authState.uid, DateTime(2023), doseModel);
+                  context.read<TimelineCubit>().updateDose(
+                      authState.uid, dateState.selectedDate, doseModel);
                 },
                 child: Image.asset(
                   doseModel.doseStatus.iconUri,
