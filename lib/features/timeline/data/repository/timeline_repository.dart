@@ -19,22 +19,29 @@ class TimelineRepositoryImpl extends TimelineRepository {
     final key =
         DateTime(selectedDate.year, selectedDate.month, selectedDate.day)
             .toString();
+    final dosesFetched = medicines
+        .map((e) => DoseModel(medicineModel: e, doseStatus: DoseEnums.pending))
+        .sortedByCompare(
+            (element) => element.medicineModel.time, (a, b) => a.compareTo(b));
     if (!box.containsKey(key)) {
-      final doses = medicines
-          .map(
-              (e) => DoseModel(medicineModel: e, doseStatus: DoseEnums.pending))
-          .sortedByCompare(
-              (element) => element.medicineModel.time, (a, b) => a.compareTo(b))
-          .toList();
-      return doses;
+      return dosesFetched;
     }
     List? dosesRaw = box.get(key);
     if (dosesRaw == null) {
       return [];
     }
-    final doses = dosesRaw
+    final dosesLocal = dosesRaw
         .map((e) => DoseModel.fromJson(Map<String, dynamic>.from(e)))
         .toList();
+    for (final doseFetch in dosesFetched) {
+      bool hasData = dosesLocal.any(
+          (element) => element.medicineModel.id == doseFetch.medicineModel.id);
+      if (!hasData) {
+        dosesLocal.add(doseFetch);
+      }
+    }
+    final doses = dosesLocal.sortedByCompare(
+        (element) => element.medicineModel.time, (a, b) => a.compareTo(b));
     return doses;
   }
 
