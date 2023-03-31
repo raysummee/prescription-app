@@ -1,4 +1,4 @@
-import 'package:app/features/home/presentation/bloc/home_cubit.dart';
+import 'package:app/features/home/presentation/bloc/home/home_cubit.dart';
 import 'package:app/features/home/presentation/components/dose_list.dart';
 import 'package:app/features/home/presentation/components/dose_list_shimmer.dart';
 import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
