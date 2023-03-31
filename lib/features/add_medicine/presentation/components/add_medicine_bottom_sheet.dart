@@ -14,8 +14,8 @@ import 'package:intl/intl.dart';
 class AddMedicineBottomSheet extends StatelessWidget {
   const AddMedicineBottomSheet({super.key});
 
-  static show(BuildContext context) {
-    showModalBottomSheet(
+  static Future<bool?> show(BuildContext context) {
+    return showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       useRootNavigator: true,
@@ -65,7 +65,7 @@ class AddMedicineBottomSheetView extends StatelessWidget {
         if (state is AddMedicineSuccess) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Success")));
-          context.pop();
+          context.pop(true);
         }
         if (state is AddMedicineLoading) {
           LoadingDialog.show(context);

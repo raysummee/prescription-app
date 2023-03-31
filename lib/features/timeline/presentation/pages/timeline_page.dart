@@ -68,8 +68,15 @@ class TimelineView extends StatelessWidget {
                         TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
                   ),
                   TextButton(
-                    onPressed: () {
-                      AddMedicineBottomSheet.show(context);
+                    onPressed: () async {
+                      final authState =
+                          context.read<AuthenticationBloc>().state;
+                      final timelineState = context.read<TimelineCubit>();
+                      await AddMedicineBottomSheet.show(context);
+                      if (authState is! AuthenticationSuccess) {
+                        return;
+                      }
+                      timelineState.fetchDose(authState.uid, DateTime(2023));
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: appTheme.colorPrimary,
