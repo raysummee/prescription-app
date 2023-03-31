@@ -1,8 +1,10 @@
 import 'package:app/core/config/app_config.dart';
-import 'package:app/features/medicine/data/models/medicine_model.dart';
+import 'package:app/features/login/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:app/features/timeline/data/enums/dose_enums.dart';
 import 'package:app/features/timeline/data/models/dose_model.dart';
+import 'package:app/features/timeline/presentation/bloc/timeline_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
@@ -94,7 +96,15 @@ class ScheduleAtomItem extends StatelessWidget {
             ),
             if (doseModel.medicineModel.time.isBefore(DateTime.now()))
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  final authState = context.read<AuthenticationBloc>().state;
+                  if (authState is! AuthenticationSuccess) {
+                    return;
+                  }
+                  context
+                      .read<TimelineCubit>()
+                      .updateDose(authState.uid, DateTime(2023), doseModel);
+                },
                 child: Image.asset(
                   doseModel.doseStatus.iconUri,
                   height: 20.h,

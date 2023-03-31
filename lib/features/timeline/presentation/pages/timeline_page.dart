@@ -32,7 +32,7 @@ class TimelinePage extends StatelessWidget {
           return BlocProvider(
             create: (context) =>
                 TimelineCubit(context.read<TimelineRepositoryImpl>())
-                  ..fetchDose(state.uid),
+                  ..fetchDose(state.uid, DateTime(2023)),
             child: const TimelineView(),
           );
         },
