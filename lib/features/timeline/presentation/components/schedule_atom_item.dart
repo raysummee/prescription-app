@@ -20,27 +20,107 @@ class ScheduleAtomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = AppConfig.of(context).appTheme;
     return Row(
-      crossAxisAlignment:
-          isFirstItem ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
+      mainAxisSize: MainAxisSize.min,
+      children: [_buildTime(), _buildSeparator(), _buildMedicineCard()],
+    );
+  }
+
+  Widget _buildTime() {
+    return Builder(builder: (context) {
+      final appTheme = AppConfig.of(context).appTheme;
+      if (prevMedicineModel != null &&
+          prevMedicineModel!.time.minute == medicineModel.time.minute &&
+          prevMedicineModel!.time.hour == medicineModel.time.hour) {
+        return SizedBox(
+          height: 55.h,
+          width: 0.15.sw,
+        );
+      }
+      return Container(
+        height: 55.h,
+        width: 0.15.sw,
+        alignment: isFirstItem
+            ? Alignment.topCenter
+            : isLastItem
+                ? Alignment.bottomCenter
+                : Alignment.center,
+        child: Text(
           DateFormat("h:mm a").format(medicineModel.time),
           style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
               color: appTheme.colorTextSecondary),
         ),
-        SizedBox(
-            child: Stack(
-          alignment: isFirstItem ? Alignment.topCenter : Alignment.center,
+      );
+    });
+  }
+
+  Widget _buildMedicineCard() {
+    return Builder(builder: (context) {
+      final appTheme = AppConfig.of(context).appTheme;
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            color: const Color.fromRGBO(231, 244, 235, 1)),
+        height: 55.h,
+        width: 0.6.sw,
+        padding: EdgeInsets.symmetric(horizontal: 18.w),
+        alignment: Alignment.centerLeft,
+        child: Row(
           children: [
-            SizedBox(
-                width: 1,
-                height: isLastItem ? 32.h : 64.h,
-                child: const DashedLineVerticalLine()),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    medicineModel.medicineName,
+                    style:
+                        TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "${medicineModel.dose} ${medicineModel.doseType}, ${medicineModel.stomach}",
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                        color: appTheme.colorTextSecondary),
+                  )
+                ],
+              ),
+            ),
+            Image.asset(
+              "assets/icons/done.png",
+              height: 20.h,
+            )
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget _buildSeparator() {
+    return Builder(builder: (context) {
+      final appTheme = AppConfig.of(context).appTheme;
+      bool isShowDot = true;
+      if (prevMedicineModel != null &&
+          prevMedicineModel!.time.minute == medicineModel.time.minute &&
+          prevMedicineModel!.time.hour == medicineModel.time.hour) {
+        isShowDot = false;
+      }
+      return SizedBox(
+          child: Stack(
+        alignment: isFirstItem
+            ? Alignment.topCenter
+            : isLastItem
+                ? Alignment.bottomCenter
+                : Alignment.center,
+        children: [
+          SizedBox(
+              width: 1, height: 55.h, child: const DashedLineVerticalLine()),
+          if (isShowDot)
             Container(
               height: 15.w,
               width: 15.w,
@@ -48,46 +128,8 @@ class ScheduleAtomItem extends StatelessWidget {
                   color: appTheme.colorSecondary,
                   borderRadius: BorderRadius.circular(50)),
             )
-          ],
-        )),
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              color: const Color.fromRGBO(231, 244, 235, 1)),
-          height: 55.h,
-          width: 229.w,
-          padding: EdgeInsets.symmetric(horizontal: 18.w),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      medicineModel.medicineName,
-                      style: TextStyle(
-                          fontSize: 13.sp, fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "${medicineModel.dose} ${medicineModel.doseType}, ${medicineModel.stomach}",
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600,
-                          color: appTheme.colorTextSecondary),
-                    )
-                  ],
-                ),
-              ),
-              Image.asset(
-                "assets/icons/done.png",
-                height: 20.h,
-              )
-            ],
-          ),
-        )
-      ],
-    );
+        ],
+      ));
+    });
   }
 }

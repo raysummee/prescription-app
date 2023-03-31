@@ -45,7 +45,7 @@ class _TimelinePageState extends State<TimelinePage> {
           dose: 2,
           doseType: "Spoon",
           stomach: "After meal",
-          time: DateTime.now()),
+          time: DateTime.now().add(const Duration(hours: 1))),
     ];
     super.initState();
   }
@@ -90,14 +90,33 @@ class _TimelinePageState extends State<TimelinePage> {
             Flexible(
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: ListView.builder(
+                  child: ListView.separated(
                     itemCount: medicineModels.length,
                     shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 0.15.sw,
+                          ),
+                          SizedBox(
+                              width: 1,
+                              height: 12.h,
+                              child: const DashedLineVerticalLine()),
+                          SizedBox(
+                            width: 0.6.sw,
+                          ),
+                        ],
+                      );
+                    },
                     itemBuilder: (context, index) {
                       return ScheduleAtomItem(
                         isFirstItem: index == 0,
                         isLastItem: index == medicineModels.length - 1,
                         medicineModel: medicineModels[index],
+                        prevMedicineModel:
+                            index > 0 ? medicineModels[index - 1] : null,
                       );
                     },
                   )),
