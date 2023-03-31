@@ -6,67 +6,32 @@ import 'package:app/features/medicine/data/models/medicine_model.dart';
 import 'package:app/features/shared/components/horz_calender.dart';
 import 'package:app/features/timeline/data/enums/dose_enums.dart';
 import 'package:app/features/timeline/data/models/dose_model.dart';
+import 'package:app/features/timeline/data/repository/timeline_repository.dart';
+import 'package:app/features/timeline/presentation/bloc/timeline_cubit.dart';
 import 'package:app/features/timeline/presentation/components/dashed_line_vertical_line.dart';
 import 'package:app/features/timeline/presentation/components/schedule_atom_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TimelinePage extends StatefulWidget {
+class TimelinePage extends StatelessWidget {
   const TimelinePage({super.key});
 
   @override
-  State<TimelinePage> createState() => _TimelinePageState();
+  Widget build(BuildContext context) {
+    return RepositoryProvider(
+      create: (context) => TimelineRepositoryImpl(),
+      child: BlocProvider(
+        create: (context) =>
+            TimelineCubit(context.read<TimelineRepositoryImpl>())..fetchDose(),
+        child: const TimelineView(),
+      ),
+    );
+  }
 }
 
-class _TimelinePageState extends State<TimelinePage> {
-  late List<DoseModel> doseModels;
-
-  @override
-  void initState() {
-    doseModels = [
-      DoseModel(
-          medicineModel: MedicineModel(
-              medicineCategoryIndex: 0,
-              medicineCategoryName: "Capsule",
-              medicineName: "Zincovit CL",
-              dose: 2,
-              doseType: "Spoon",
-              stomach: "After meal",
-              time: DateTime.now().subtract(const Duration(minutes: 30))),
-          doseStatus: DoseEnums.pending),
-      DoseModel(
-          medicineModel: MedicineModel(
-              medicineCategoryIndex: 0,
-              medicineCategoryName: "Capsule",
-              medicineName: "Zincovit CL",
-              dose: 2,
-              doseType: "Spoon",
-              stomach: "After meal",
-              time: DateTime.now()),
-          doseStatus: DoseEnums.taken),
-      DoseModel(
-          medicineModel: MedicineModel(
-              medicineCategoryIndex: 0,
-              medicineCategoryName: "Capsule",
-              medicineName: "Zincovit CL",
-              dose: 2,
-              doseType: "Spoon",
-              stomach: "After meal",
-              time: DateTime.now()),
-          doseStatus: DoseEnums.notTaken),
-      DoseModel(
-          medicineModel: MedicineModel(
-              medicineCategoryIndex: 0,
-              medicineCategoryName: "Capsule",
-              medicineName: "Zincovit CL",
-              dose: 2,
-              doseType: "Spoon",
-              stomach: "After meal",
-              time: DateTime.now().add(const Duration(hours: 1))),
-          doseStatus: DoseEnums.pending),
-    ];
-    super.initState();
-  }
+class TimelineView extends StatelessWidget {
+  const TimelineView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -108,31 +73,42 @@ class _TimelinePageState extends State<TimelinePage> {
             Flexible(
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: ListView.separated(
-                    itemCount: doseModels.length,
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 0.15.sw,
-                          ),
-                          SizedBox(
-                              width: 1,
-                              height: 12.h,
-                              child: const DashedLineVerticalLine()),
-                          SizedBox(
-                            width: 0.6.sw,
-                          ),
-                        ],
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      return ScheduleAtomItem(
-                        isFirstItem: index == 0,
-                        doseModel: doseModels[index],
-                        prevDoseModel: index > 0 ? doseModels[index - 1] : null,
+                  child: BlocBuilder<TimelineCubit, TimelineState>(
+                    builder: (context, state) {
+                      if (state is! TimelineLoaded) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      final doseModels = state.doses;
+                      return ListView.separated(
+                        itemCount: doseModels.length,
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 0.15.sw,
+                              ),
+                              SizedBox(
+                                  width: 1,
+                                  height: 12.h,
+                                  child: const DashedLineVerticalLine()),
+                              SizedBox(
+                                width: 0.6.sw,
+                              ),
+                            ],
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          return ScheduleAtomItem(
+                            isFirstItem: index == 0,
+                            doseModel: doseModels[index],
+                            prevDoseModel:
+                                index > 0 ? doseModels[index - 1] : null,
+                          );
+                        },
                       );
                     },
                   )),
